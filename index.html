@@ -161,10 +161,10 @@
   .sheet::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
   .handle{width:42px;height:4px;border-radius:9px;background:rgba(255,255,255,.2);margin:0 auto 20px}
 
-  .form-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
-  .form-header h2{font-size:19px;font-weight:800;letter-spacing:-.4px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .form-header-acoes{display:flex;gap:6px;flex-shrink:0;align-items:center}
-  .camera-form-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:13px;border:1px solid rgba(255,181,71,.4);background:rgba(255,181,71,.12);color:#ffc46e;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex:0 0 auto}
+  .form-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+  .form-header h2{font-size:19px;font-weight:800;letter-spacing:-.4px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:6px}
+  .form-header-acoes{display:flex;gap:6px;flex-shrink:0;align-items:center;flex-wrap:wrap}
+  .camera-form-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:13px;border:1px solid rgba(255,181,71,.4);background:rgba(255,181,71,.12);color:#ffc46e;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex:0 0 auto}
   .camera-form-btn:hover{background:rgba(255,181,71,.24);border-color:rgba(255,181,71,.65);color:#ffd699}
   .camera-form-btn .em{font-size:16px;line-height:1}
   .camera-form-btn.busy{opacity:.6;pointer-events:none}
@@ -484,7 +484,8 @@
     .contato-chip .contato-nome{max-width:100px}
     .camera-btn .camera-emoji{font-size:38px}
     .camera-btn .camera-titulo{font-size:15px}
-    .camera-form-btn{padding:9px 11px;font-size:12px}
+    .camera-form-btn{padding:8px 10px;font-size:11.5px;gap:4px}
+    .camera-form-btn .txt{display:inline}
   }
 
   .boot{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);transition:opacity .4s ease}
@@ -1033,6 +1034,7 @@ let imgUrlAtual = null;
 let processandoFoto = false;
 let itemZapAtual = null;
 let zapItemContato = null;
+let extintorDadosPendentes = null; // campos estruturados quando edita extintor via foto
 
 const CATS = {
   trabalho:  { icon:'💼', label:'Trabalho',   cor:'#7c5cff' },
@@ -1467,6 +1469,7 @@ const formIaStatusTxt = document.getElementById('formIaStatusTxt');
 
 function abrirModal(item = null){
   editandoId = item ? item.id : null;
+  extintorDadosPendentes = null;
   document.getElementById('tituloModal').textContent = item ? '✏️ Editar' : 'Nova tarefa';
   document.getElementById('fDesc').value = item ? (item.descricao || item.titulo || '') : '';
   document.getElementById('fData').value = item ? (item.data || '') : hojeISO();
@@ -1476,6 +1479,7 @@ function abrirModal(item = null){
   lembreteOn = item ? !!item.lembrete : false;
   document.getElementById('fHoraLembrete').value = item?.horaLembrete || '09:00';
   sincronizarChips(); sincronizarLembrete();
+  /* Botões de foto/galeria SEMPRE visíveis — tanto em nova quanto em edição */
   btnCameraForm.style.display = 'inline-flex';
   btnGaleriaForm.style.display = 'inline-flex';
   formIaStatus.classList.remove('on','ok','erro');
@@ -1486,7 +1490,7 @@ function abrirModal(item = null){
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('fDesc').focus(), 320);
 }
-function fecharModal(){ overlay.classList.remove('on'); document.body.style.overflow=''; editandoId=null; }
+function fecharModal(){ overlay.classList.remove('on'); document.body.style.overflow=''; editandoId=null; extintorDadosPendentes=null; }
 function sincronizarChips(){
   document.querySelectorAll('#chipsCat .chip-opt').forEach(b => b.classList.toggle('on', b.dataset.v === catSel));
   document.querySelectorAll('#chipsPrio .chip-opt').forEach(b => b.classList.toggle('on', b.dataset.v === prioSel));
@@ -1550,11 +1554,30 @@ async function processarFotoNoForm(file){
     if(dados.lembrete && dados.horaLembrete){ lembreteOn = true; fHoraLembrete.value = dados.horaLembrete; sincronizarLembrete(); piscarCampo(fHoraLembrete); }
     if(dados.categoria && CATS[dados.categoria]){ catSel = dados.categoria; }
     if(dados.prioridade && PRIOS[dados.prioridade]){ prioSel = dados.prioridade; }
+    /* Se editando e detectou extintor, guarda os campos estruturados para aplicar ao salvar */
+    if(editandoId && detectouExt){
+      extintorDadosPendentes = {
+        isExtintor: true,
+        tipoItem: 'extintor',
+        categoria: 'extintor',
+        numero: dados.numero || '',
+        tipo: dados.tipo || '',
+        capacidade: dados.capacidade || '',
+        local: dados.local || '',
+        fabricacao: dados.fabricacao || '',
+        validade: dados.validade || '',
+        recarga: dados.recarga || '',
+        prioridade: dados.prioridade,
+        data: dados.data,
+        lembrete: !!dados.lembrete,
+        horaLembrete: dados.horaLembrete || '09:00'
+      };
+    }
     sincronizarChips();
     formIaStatus.classList.remove('on','erro');
     formIaStatus.classList.add('on','ok');
     formIaStatusTxt.textContent = detectouExt
-      ? '✓ Extintor detectado e campos preenchidos! Revise e salve.'
+      ? (editandoId ? '✓ Extintor detectado! Vai atualizar todos os campos ao salvar.' : '✓ Extintor detectado e campos preenchidos! Revise e salve.')
       : '✓ Campos preenchidos automaticamente! Revise e salve.';
     setTimeout(() => formIaStatus.classList.remove('on'), 6000);
   }catch(err){
@@ -1599,7 +1622,12 @@ async function salvarItem(){
   try{
     if(editandoId){
       const atual = await DB.obter(editandoId);
-      await DB.atualizar({ ...atual, ...dados });
+      const final = { ...atual, ...dados };
+      /* Se houve foto de extintor durante a edição, aplica os campos estruturados */
+      if(extintorDadosPendentes){
+        Object.assign(final, extintorDadosPendentes);
+      }
+      await DB.atualizar(final);
       toast('✏️ Atualizado');
     } else {
       await DB.criar({ id: uid(), ...dados, concluido: false, criadoEm: Date.now(), tipoItem: dados.tipoItem || 'tarefa' });

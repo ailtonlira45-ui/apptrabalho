@@ -48,14 +48,18 @@
   .painel{border-radius:22px;padding:18px 20px;margin-bottom:16px;background:linear-gradient(135deg,rgba(124,92,255,.20),rgba(61,220,255,.10));border:1px solid rgba(124,92,255,.35);box-shadow:0 14px 40px -18px rgba(124,92,255,.8);animation:entra .4s ease both}
   .painel[hidden]{display:none}
   .painel-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
-  .painel-top .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulsa 2s infinite}
+  .painel-top .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulsa 2s infinite;flex:0 0 8px}
   .painel-top h2{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#cfd4e6}
-  .painel-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid rgba(255,255,255,.09);font-size:14.5px}
+  .painel-body{max-height:320px;overflow-y:auto;margin:0 -8px;padding:0 8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;overscroll-behavior:contain}
+  .painel-body::-webkit-scrollbar{width:4px}
+  .painel-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:9px}
+  .painel-count{margin-left:auto;font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.1);color:#cfd4e6;letter-spacing:.3px;font-variant-numeric:tabular-nums}
+  .painel-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid rgba(255,255,255,.09);font-size:14.5px}
   .painel-item:first-of-type{border-top:none}
-  .painel-item .hora{font-weight:700;font-size:13px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.12);flex:0 0 auto;font-variant-numeric:tabular-nums}
-  .painel-item .txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+  .painel-item .hora{font-weight:700;font-size:12px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.12);flex:0 0 auto;font-variant-numeric:tabular-nums;margin-top:1px;white-space:nowrap}
+  .painel-item .txt{flex:1;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-weight:500;line-height:1.4;word-break:break-word}
   .painel-item.atras .hora{background:rgba(255,92,124,.2);color:#ff9db2}
-  .painel-item .status-dot{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+  .painel-item .status-dot{width:9px;height:9px;border-radius:50%;flex:0 0 9px;margin-top:5px}
 
   .filtros{display:flex;gap:8px;overflow-x:auto;padding:0 0 16px;scrollbar-width:none}
   .filtros::-webkit-scrollbar{display:none}
@@ -127,7 +131,6 @@
   .ext-dias.cinza{background:rgba(139,147,168,.1);color:#9aa2b8;border:1px solid rgba(139,147,168,.25)}
   .ext-dias .emoji{font-size:16px}
 
-  /* Barra de ações do card — 3 botões */
   .card-acoes{position:absolute;left:14px;right:14px;bottom:12px;display:flex;gap:6px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)}
   .acao-btn{flex:1;padding:9px 8px;border-radius:11px;cursor:pointer;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.045);color:#c3c9db;font-family:inherit;font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;transition:.2s;white-space:nowrap}
   .acao-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.18)}
@@ -1330,23 +1333,36 @@ function renderPainel(){
   const hoje = hojeISO();
   const lembretes = items.filter(i => i.lembrete && i.data === hoje && !i.concluido && !i.isExtintor);
   const atrasados = items.filter(i => i.data && i.data < hoje && !i.concluido && !i.isExtintor);
-  const extAlerta = items.filter(i => i.isExtintor && !i.concluido).filter(i => { const s = statusExtintor(i.validade); return s.cor === 'vermelho' || s.cor === 'amarelo'; }).sort((a,b)=>{ const sa = statusExtintor(a.validade).dias ?? 9999; const sb = statusExtintor(b.validade).dias ?? 9999; return sa - sb; });
-  if(lembretes.length === 0 && atrasados.length === 0 && extAlerta.length === 0){ painel.hidden = true; return; }
-  let html = `<div class="painel-top"><span class="dot"></span><h2>Rotina de hoje</h2></div>`;
-  extAlerta.slice(0,4).forEach(i => {
+  const extAlerta = items.filter(i => i.isExtintor && !i.concluido)
+    .filter(i => { const s = statusExtintor(i.validade); return s.cor === 'vermelho' || s.cor === 'amarelo'; })
+    .sort((a,b)=>{ const sa = statusExtintor(a.validade).dias ?? 9999; const sb = statusExtintor(b.validade).dias ?? 9999; return sa - sb; });
+
+  const totalItens = extAlerta.length + lembretes.length + atrasados.length;
+  if(totalItens === 0){ painel.hidden = true; return; }
+
+  let itemsHtml = '';
+  extAlerta.forEach(i => {
     const s = statusExtintor(i.validade);
     const cor = s.cor === 'vermelho' ? '#ff5c7c' : '#ffb547';
     const label = s.cor === 'vermelho' ? 'VENCIDO' : 'VENCE LOGO';
     const localTxt = i.local ? ' · ' + escapar(i.local) : '';
-    html += `<div class="painel-item"><span class="status-dot" style="background:${cor}"></span><span class="hora" style="background:${cor}22;color:${cor}">${label}</span><span class="txt">${escapar(i.numero ? 'Nº '+i.numero : conteudoDe(i))}${localTxt}</span></div>`;
+    itemsHtml += `<div class="painel-item"><span class="status-dot" style="background:${cor}"></span><span class="hora" style="background:${cor}22;color:${cor}">${label}</span><span class="txt">${escapar(i.numero ? 'Nº '+i.numero : conteudoDe(i))}${localTxt}</span></div>`;
   });
   lembretes.sort((a,b)=>(a.horaLembrete||'99:99').localeCompare(b.horaLembrete||'99:99')).forEach(i => {
-    html += `<div class="painel-item"><span class="hora">${i.horaLembrete||'--:--'}</span><span class="txt">${escapar(conteudoDe(i))}</span></div>`;
+    itemsHtml += `<div class="painel-item"><span class="hora">${i.horaLembrete||'--:--'}</span><span class="txt">${escapar(conteudoDe(i))}</span></div>`;
   });
-  atrasados.slice(0,4).forEach(i => {
-    html += `<div class="painel-item atras"><span class="hora">Atrasado</span><span class="txt">${escapar(conteudoDe(i))} · ${fmtData(i.data)}</span></div>`;
+  atrasados.sort((a,b)=>(a.data||'').localeCompare(b.data||'')).forEach(i => {
+    itemsHtml += `<div class="painel-item atras"><span class="hora">Atrasado</span><span class="txt">${escapar(conteudoDe(i))} · ${fmtData(i.data)}</span></div>`;
   });
-  painel.innerHTML = html;
+
+  painel.innerHTML = `
+    <div class="painel-top">
+      <span class="dot"></span>
+      <h2>Rotina de hoje</h2>
+      <span class="painel-count">${totalItens} ${totalItens === 1 ? 'item' : 'itens'}</span>
+    </div>
+    <div class="painel-body">${itemsHtml}</div>
+  `;
   painel.hidden = false;
 }
 function renderCardExtintor(i, idx){
@@ -1460,8 +1476,8 @@ function abrirModal(item = null){
   lembreteOn = item ? !!item.lembrete : false;
   document.getElementById('fHoraLembrete').value = item?.horaLembrete || '09:00';
   sincronizarChips(); sincronizarLembrete();
-  btnCameraForm.style.display = item ? 'none' : 'inline-flex';
-  btnGaleriaForm.style.display = item ? 'none' : 'inline-flex';
+  btnCameraForm.style.display = 'inline-flex';
+  btnGaleriaForm.style.display = 'inline-flex';
   formIaStatus.classList.remove('on','ok','erro');
   formIaStatusTxt.textContent = 'Analisando foto…';
   inputCameraForm.value = '';

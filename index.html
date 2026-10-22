@@ -159,12 +159,15 @@
   .handle{width:42px;height:4px;border-radius:9px;background:rgba(255,255,255,.2);margin:0 auto 20px}
 
   .form-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
-  .form-header h2{font-size:19px;font-weight:800;letter-spacing:-.4px}
+  .form-header h2{font-size:19px;font-weight:800;letter-spacing:-.4px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .form-header-acoes{display:flex;gap:6px;flex-shrink:0;align-items:center}
   .camera-form-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:13px;border:1px solid rgba(255,181,71,.4);background:rgba(255,181,71,.12);color:#ffc46e;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex:0 0 auto}
   .camera-form-btn:hover{background:rgba(255,181,71,.24);border-color:rgba(255,181,71,.65);color:#ffd699}
   .camera-form-btn .em{font-size:16px;line-height:1}
   .camera-form-btn.busy{opacity:.6;pointer-events:none}
   .camera-form-btn.busy .em{animation:gira 1s linear infinite;display:inline-block}
+  .camera-form-btn.galeria{border-color:rgba(61,220,255,.4);background:rgba(61,220,255,.12);color:#7ee6ff}
+  .camera-form-btn.galeria:hover{background:rgba(61,220,255,.24);border-color:rgba(61,220,255,.65);color:#aef1ff}
 
   .field{margin-bottom:17px}
   .field > label{display:block;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;margin-bottom:9px}
@@ -298,6 +301,11 @@
   .camera-btn .camera-emoji{font-size:44px;line-height:1}
   .camera-btn .camera-titulo{font-size:16px;font-weight:800;letter-spacing:-.3px}
   .camera-btn .camera-sub{font-size:12.5px;font-weight:600;color:rgba(11,13,23,.72)}
+
+  .galeria-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px 20px;border-radius:16px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:#7ee6ff;background:rgba(61,220,255,.10);border:1px solid rgba(61,220,255,.35);transition:.2s;margin-bottom:12px}
+  .galeria-btn:hover{background:rgba(61,220,255,.20);border-color:rgba(61,220,255,.6);transform:translateY(-2px)}
+  .galeria-btn:active{transform:scale(.98)}
+  .galeria-btn .em{font-size:20px;line-height:1}
 
   .foto-abertura-aviso{display:flex;align-items:center;gap:10px;justify-content:center;padding:11px 13px;border-radius:12px;margin-top:2px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#8b93a8;line-height:1.45;text-align:center}
 
@@ -458,7 +466,23 @@
   @keyframes pulsa{0%{box-shadow:0 0 0 0 rgba(46,230,168,.65)}70%{box-shadow:0 0 0 9px rgba(46,230,168,0)}100%{box-shadow:0 0 0 0 rgba(46,230,168,0)}}
 
   @media(min-width:700px){.overlay{align-items:center;padding:24px}.sheet{border-radius:28px;max-height:88vh}.handle{display:none}}
-  @media(max-width:400px){.fab{padding:14px 16px;font-size:13px}.acao-circ{width:52px;height:52px;flex:0 0 52px;font-size:20px}.voz-mic{width:84px;height:84px;font-size:32px}.acao-btn{font-size:11px;padding:8px 6px;gap:4px}.acao-btn svg{width:12px;height:12px}.ext-info{grid-template-columns:1fr}.ext-grid{grid-template-columns:1fr 1fr 1fr;gap:6px}.ext-stat .n{font-size:18px}.icone-btn{width:40px;height:40px;flex:0 0 40px;font-size:16px}.rev-campos{grid-template-columns:1fr}.foto-guia-grid{grid-template-columns:1fr}.contato-chip .contato-nome{max-width:100px}.camera-btn .camera-emoji{font-size:38px}.camera-btn .camera-titulo{font-size:15px}.camera-form-btn{padding:9px 11px;font-size:12px}}
+  @media(max-width:400px){
+    .fab{padding:14px 16px;font-size:13px}
+    .acao-circ{width:52px;height:52px;flex:0 0 52px;font-size:20px}
+    .voz-mic{width:84px;height:84px;font-size:32px}
+    .acao-btn{font-size:11px;padding:8px 6px;gap:4px}
+    .acao-btn svg{width:12px;height:12px}
+    .ext-info{grid-template-columns:1fr}
+    .ext-grid{grid-template-columns:1fr 1fr 1fr;gap:6px}
+    .ext-stat .n{font-size:18px}
+    .icone-btn{width:40px;height:40px;flex:0 0 40px;font-size:16px}
+    .rev-campos{grid-template-columns:1fr}
+    .foto-guia-grid{grid-template-columns:1fr}
+    .contato-chip .contato-nome{max-width:100px}
+    .camera-btn .camera-emoji{font-size:38px}
+    .camera-btn .camera-titulo{font-size:15px}
+    .camera-form-btn{padding:9px 11px;font-size:12px}
+  }
 
   .boot{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);transition:opacity .4s ease}
   .boot.off{opacity:0;pointer-events:none}
@@ -524,10 +548,16 @@
     <div class="handle"></div>
     <div class="form-header">
       <h2 id="tituloModal">Nova tarefa</h2>
-      <button class="camera-form-btn" id="btnCameraForm" type="button" title="Tirar foto e preencher">
-        <span class="em">📷</span>
-        <span class="txt">Tirar foto</span>
-      </button>
+      <div class="form-header-acoes">
+        <button class="camera-form-btn" id="btnCameraForm" type="button" title="Tirar foto e preencher">
+          <span class="em">📷</span>
+          <span class="txt">Foto</span>
+        </button>
+        <button class="camera-form-btn galeria" id="btnGaleriaForm" type="button" title="Escolher da galeria">
+          <span class="em">🖼️</span>
+          <span class="txt">Galeria</span>
+        </button>
+      </div>
     </div>
 
     <div class="form-ia-status" id="formIaStatus">
@@ -558,6 +588,7 @@
     </div>
 
     <input type="file" id="inputCameraForm" accept="image/*" capture="environment" hidden>
+    <input type="file" id="inputGaleriaForm" accept="image/*" hidden>
   </div>
 </div>
 
@@ -616,11 +647,16 @@
         <span class="camera-titulo">Abrir câmera e tirar foto</span>
         <span class="camera-sub">Use a câmera para registrar a foto</span>
       </button>
+      <button class="galeria-btn" id="btnAbrirGaleria" type="button">
+        <span class="em">🖼️</span>
+        <span>Escolher da galeria</span>
+      </button>
       <div class="foto-abertura-aviso">
         <span>📱</span>
         <span>A câmera abre direto no seu celular ou webcam do computador.</span>
       </div>
       <input type="file" id="inputCamera" accept="image/*" capture="environment" hidden>
+      <input type="file" id="inputGaleria" accept="image/*" hidden>
     </div>
     <div id="fotoEtapa2" hidden>
       <div class="foto-preview" id="fotoPreview"><img id="fotoImg" alt="Pré-visualização"></div>
@@ -1407,7 +1443,9 @@ async function recarregarDoBanco(){ items = await DB.listarTodos(); renderTudo()
 ============================================================ */
 const overlay = document.getElementById('overlay');
 const inputCameraForm = document.getElementById('inputCameraForm');
+const inputGaleriaForm = document.getElementById('inputGaleriaForm');
 const btnCameraForm = document.getElementById('btnCameraForm');
+const btnGaleriaForm = document.getElementById('btnGaleriaForm');
 const formIaStatus = document.getElementById('formIaStatus');
 const formIaStatusTxt = document.getElementById('formIaStatusTxt');
 
@@ -1423,9 +1461,11 @@ function abrirModal(item = null){
   document.getElementById('fHoraLembrete').value = item?.horaLembrete || '09:00';
   sincronizarChips(); sincronizarLembrete();
   btnCameraForm.style.display = item ? 'none' : 'inline-flex';
+  btnGaleriaForm.style.display = item ? 'none' : 'inline-flex';
   formIaStatus.classList.remove('on','ok','erro');
   formIaStatusTxt.textContent = 'Analisando foto…';
   inputCameraForm.value = '';
+  inputGaleriaForm.value = '';
   overlay.classList.add('on');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('fDesc').focus(), 320);
@@ -1451,12 +1491,14 @@ async function processarFotoNoForm(file){
   formIaStatus.classList.add('on');
   formIaStatusTxt.textContent = 'Carregando IA…';
   btnCameraForm.classList.add('busy');
+  btnGaleriaForm.classList.add('busy');
   try { await garantirTesseract(); }
   catch(e){
     formIaStatus.classList.remove('on','ok');
     formIaStatus.classList.add('on','erro');
     formIaStatusTxt.textContent = '⚠️ Sem internet para carregar a IA';
     btnCameraForm.classList.remove('busy');
+    btnGaleriaForm.classList.remove('busy');
     return;
   }
   formIaStatusTxt.textContent = 'Lendo a foto…';
@@ -1477,6 +1519,7 @@ async function processarFotoNoForm(file){
       formIaStatus.classList.add('on','erro');
       formIaStatusTxt.textContent = '⚠️ Não consegui ler a imagem. Tente de novo, mais perto e com boa luz.';
       btnCameraForm.classList.remove('busy');
+      btnGaleriaForm.classList.remove('busy');
       return;
     }
     const detectouExt = ehExtintor(' ' + texto.toLowerCase() + ' ');
@@ -1506,11 +1549,18 @@ async function processarFotoNoForm(file){
     setTimeout(() => formIaStatus.classList.remove('on'), 6000);
   }finally{
     btnCameraForm.classList.remove('busy');
+    btnGaleriaForm.classList.remove('busy');
     inputCameraForm.value = '';
+    inputGaleriaForm.value = '';
   }
 }
 btnCameraForm.addEventListener('click', () => inputCameraForm.click());
+btnGaleriaForm.addEventListener('click', () => inputGaleriaForm.click());
 inputCameraForm.addEventListener('change', e => {
+  const f = e.target.files?.[0];
+  if(f) processarFotoNoForm(f);
+});
+inputGaleriaForm.addEventListener('change', e => {
   const f = e.target.files?.[0];
   if(f) processarFotoNoForm(f);
 });
@@ -1894,6 +1944,8 @@ const fotoStatusTxt = document.getElementById('fotoStatusTxt');
 const fotoErro = document.getElementById('fotoErro');
 const fotoTexto = document.getElementById('fotoTexto');
 const inputCamera = document.getElementById('inputCamera');
+const inputGaleria = document.getElementById('inputGaleria');
+const btnAbrirGaleria = document.getElementById('btnAbrirGaleria');
 const revCampos = document.getElementById('revCampos');
 const revCabec = document.getElementById('revCabec');
 const revIcone = document.getElementById('revIcone');
@@ -1928,6 +1980,7 @@ function resetFoto(){
   fotoTexto.value = '';
   setFotoErro(null);
   inputCamera.value = '';
+  inputGaleria.value = '';
   processandoFoto = false;
 }
 function atualizarModoFoto(){ fotoGuia.hidden = modoFoto !== 'extintor'; }
@@ -2175,7 +2228,9 @@ async function executarSalvarFoto(){
   }catch(e){ console.error(e); toast('⚠️ Erro ao salvar'); }
 }
 document.getElementById('btnAbrirCamera').addEventListener('click', () => { inputCamera.click(); });
+btnAbrirGaleria.addEventListener('click', () => { inputGaleria.click(); });
 inputCamera.addEventListener('change', e => { const f = e.target.files?.[0]; if(f) processarFoto(f); });
+inputGaleria.addEventListener('change', e => { const f = e.target.files?.[0]; if(f) processarFoto(f); });
 document.getElementById('fotoFechar').addEventListener('click', fecharFoto);
 overlayFoto.addEventListener('click', e=>{ if(e.target===overlayFoto) fecharFoto(); });
 document.getElementById('fotoNova').addEventListener('click', ()=>{ resetFoto(); });

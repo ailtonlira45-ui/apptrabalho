@@ -12,11 +12,11 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   :root{--bg:#080a12;--card-brd:rgba(255,255,255,.09);--txt:#eef1f8;--muted:#8b93a8;--accent:#7c5cff;--ok:#2ee6a8;--warn:#ffb547;--danger:#ff5c7c;--radius:20px;color-scheme:dark}
   html,body{height:100%}
-  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:0 18px 130px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:0 18px 48px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(620px 420px at 12% -8%,rgba(124,92,255,.38),transparent 62%),radial-gradient(520px 400px at 92% 2%,rgba(61,220,255,.16),transparent 62%),radial-gradient(700px 520px at 50% 112%,rgba(255,92,124,.10),transparent 62%)}
   .wrap{max-width:680px;margin:0 auto}
 
-  header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:26px 0 20px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:26px 0 16px}
   .brand{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
   .logo{width:44px;height:44px;flex:0 0 44px;border-radius:14px;background:linear-gradient(135deg,#7c5cff,#3ddcff);display:grid;place-items:center;font-size:20px;box-shadow:0 8px 26px rgba(124,92,255,.45)}
   .brand h1{font-size:17px;font-weight:800;letter-spacing:-.4px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -32,6 +32,30 @@
   .db-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--warn);transition:.3s}
   .db-dot.ready{background:var(--ok);animation:pulsaDb 2s infinite}
   @keyframes pulsaDb{0%{box-shadow:0 0 0 0 rgba(46,230,168,.6)}70%{box-shadow:0 0 0 7px rgba(46,230,168,0)}100%{box-shadow:0 0 0 0 rgba(46,230,168,0)}}
+
+  /* ===== Barra de ações no topo (mic + nova tarefa) ===== */
+  .top-acoes{display:flex;gap:9px;margin:0 0 16px}
+  .btn-top-mic{
+    width:54px;height:54px;flex:0 0 54px;border-radius:17px;cursor:pointer;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(18,22,38,.92);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    color:#fff;font-size:22px;display:grid;place-items:center;
+    transition:transform .22s cubic-bezier(.2,.9,.3,1),background .22s,border-color .22s;
+    box-shadow:0 10px 26px -10px rgba(0,0,0,.95);
+  }
+  .btn-top-mic:hover{transform:translateY(-2px);background:rgba(124,92,255,.3);border-color:rgba(124,92,255,.6)}
+  .btn-top-mic:active{transform:scale(.95)}
+  .btn-top-nova{
+    flex:1;height:54px;border-radius:17px;border:none;cursor:pointer;
+    font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:-.2px;color:#fff;
+    background:linear-gradient(135deg,#7c5cff,#5b3df5 55%,#3ddcff 140%);
+    box-shadow:0 12px 30px -10px rgba(124,92,255,.9),0 0 0 1px rgba(255,255,255,.12) inset;
+    display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
+    transition:transform .22s cubic-bezier(.2,.9,.3,1),box-shadow .22s;
+  }
+  .btn-top-nova:hover{transform:translateY(-2px);box-shadow:0 16px 38px -10px rgba(124,92,255,1)}
+  .btn-top-nova:active{transform:scale(.97)}
 
   .ext-panel{border-radius:22px;padding:16px 18px;margin-bottom:16px;background:linear-gradient(135deg,rgba(255,181,71,.14),rgba(255,92,124,.08));border:1px solid rgba(255,181,71,.28);box-shadow:0 14px 40px -20px rgba(255,181,71,.6);animation:entra .4s ease both}
   .ext-panel[hidden]{display:none}
@@ -144,14 +168,6 @@
   .vazio .ico{width:76px;height:76px;margin:0 auto 18px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid var(--card-brd);display:grid;place-items:center;font-size:33px}
   .vazio h3{font-size:16px;font-weight:700;color:#c3c9db;margin-bottom:7px}
   .vazio p{font-size:13.5px;line-height:1.6;max-width:280px;margin:0 auto}
-
-  .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:30;display:flex;align-items:center;gap:9px;padding:0 6px}
-  .fab{padding:15px 22px;border-radius:19px;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:-.2px;color:#fff;background:linear-gradient(135deg,#7c5cff,#5b3df5 55%,#3ddcff 140%);box-shadow:0 14px 38px -10px rgba(124,92,255,.9),0 0 0 1px rgba(255,255,255,.12) inset;display:flex;align-items:center;gap:8px;transition:transform .22s cubic-bezier(.2,.9,.3,1),box-shadow .22s;white-space:nowrap}
-  .fab:hover{transform:translateY(-3px);box-shadow:0 20px 46px -12px rgba(124,92,255,1)}
-  .fab:active{transform:scale(.97)}
-  .acao-circ{width:56px;height:56px;flex:0 0 56px;border-radius:19px;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(18,22,38,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;font-size:22px;display:grid;place-items:center;box-shadow:0 14px 38px -12px rgba(0,0,0,.95);transition:transform .22s cubic-bezier(.2,.9,.3,1),background .22s,border-color .22s}
-  .acao-circ:hover{transform:translateY(-3px);background:rgba(124,92,255,.3);border-color:rgba(124,92,255,.6)}
-  .acao-circ:active{transform:scale(.95)}
 
   .overlay{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(4,6,12,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .28s}
   .overlay.on{opacity:1;pointer-events:auto}
@@ -470,8 +486,8 @@
 
   @media(min-width:700px){.overlay{align-items:center;padding:24px}.sheet{border-radius:28px;max-height:88vh}.handle{display:none}}
   @media(max-width:400px){
-    .fab{padding:14px 16px;font-size:13px}
-    .acao-circ{width:52px;height:52px;flex:0 0 52px;font-size:20px}
+    .btn-top-mic{width:50px;height:50px;flex:0 0 50px;font-size:20px;border-radius:15px}
+    .btn-top-nova{height:50px;font-size:13.5px;border-radius:15px}
     .voz-mic{width:84px;height:84px;font-size:32px}
     .acao-btn{font-size:11px;padding:8px 6px;gap:4px}
     .acao-btn svg{width:12px;height:12px}
@@ -520,6 +536,12 @@
     </div>
   </header>
 
+  <!-- Ações principais no TOPO (mic + nova tarefa) -->
+  <div class="top-acoes">
+    <button class="btn-top-mic" id="btnFalar" title="Registrar por voz">🎤</button>
+    <button class="btn-top-nova" id="btnNova">+ Nova tarefa</button>
+  </div>
+
   <section class="ext-panel" id="extPanel" hidden>
     <div class="ext-panel-top"><h2>🧯 Status dos extintores</h2></div>
     <div class="ext-grid">
@@ -540,11 +562,6 @@
   </div>
 
   <div class="lista" id="lista"></div>
-</div>
-
-<div class="dock">
-  <button class="acao-circ" id="btnFalar" title="Registrar por voz">🎤</button>
-  <button class="fab" id="btnNova">+ Nova tarefa</button>
 </div>
 
 <div class="overlay" id="overlay">
@@ -1034,7 +1051,7 @@ let imgUrlAtual = null;
 let processandoFoto = false;
 let itemZapAtual = null;
 let zapItemContato = null;
-let extintorDadosPendentes = null; // campos estruturados quando edita extintor via foto
+let extintorDadosPendentes = null;
 
 const CATS = {
   trabalho:  { icon:'💼', label:'Trabalho',   cor:'#7c5cff' },
@@ -1479,7 +1496,6 @@ function abrirModal(item = null){
   lembreteOn = item ? !!item.lembrete : false;
   document.getElementById('fHoraLembrete').value = item?.horaLembrete || '09:00';
   sincronizarChips(); sincronizarLembrete();
-  /* Botões de foto/galeria SEMPRE visíveis — tanto em nova quanto em edição */
   btnCameraForm.style.display = 'inline-flex';
   btnGaleriaForm.style.display = 'inline-flex';
   formIaStatus.classList.remove('on','ok','erro');
@@ -1554,7 +1570,6 @@ async function processarFotoNoForm(file){
     if(dados.lembrete && dados.horaLembrete){ lembreteOn = true; fHoraLembrete.value = dados.horaLembrete; sincronizarLembrete(); piscarCampo(fHoraLembrete); }
     if(dados.categoria && CATS[dados.categoria]){ catSel = dados.categoria; }
     if(dados.prioridade && PRIOS[dados.prioridade]){ prioSel = dados.prioridade; }
-    /* Se editando e detectou extintor, guarda os campos estruturados para aplicar ao salvar */
     if(editandoId && detectouExt){
       extintorDadosPendentes = {
         isExtintor: true,
@@ -1623,7 +1638,6 @@ async function salvarItem(){
     if(editandoId){
       const atual = await DB.obter(editandoId);
       const final = { ...atual, ...dados };
-      /* Se houve foto de extintor durante a edição, aplica os campos estruturados */
       if(extintorDadosPendentes){
         Object.assign(final, extintorDadosPendentes);
       }

@@ -33,27 +33,11 @@
   .db-dot.ready{background:var(--ok);animation:pulsaDb 2s infinite}
   @keyframes pulsaDb{0%{box-shadow:0 0 0 0 rgba(46,230,168,.6)}70%{box-shadow:0 0 0 7px rgba(46,230,168,0)}100%{box-shadow:0 0 0 0 rgba(46,230,168,0)}}
 
-  /* ===== Barra de ações no topo (mic + nova tarefa) ===== */
   .top-acoes{display:flex;gap:9px;margin:0 0 16px}
-  .btn-top-mic{
-    width:54px;height:54px;flex:0 0 54px;border-radius:17px;cursor:pointer;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(18,22,38,.92);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-    color:#fff;font-size:22px;display:grid;place-items:center;
-    transition:transform .22s cubic-bezier(.2,.9,.3,1),background .22s,border-color .22s;
-    box-shadow:0 10px 26px -10px rgba(0,0,0,.95);
-  }
+  .btn-top-mic{width:54px;height:54px;flex:0 0 54px;border-radius:17px;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(18,22,38,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;font-size:22px;display:grid;place-items:center;transition:transform .22s cubic-bezier(.2,.9,.3,1),background .22s,border-color .22s;box-shadow:0 10px 26px -10px rgba(0,0,0,.95)}
   .btn-top-mic:hover{transform:translateY(-2px);background:rgba(124,92,255,.3);border-color:rgba(124,92,255,.6)}
   .btn-top-mic:active{transform:scale(.95)}
-  .btn-top-nova{
-    flex:1;height:54px;border-radius:17px;border:none;cursor:pointer;
-    font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:-.2px;color:#fff;
-    background:linear-gradient(135deg,#7c5cff,#5b3df5 55%,#3ddcff 140%);
-    box-shadow:0 12px 30px -10px rgba(124,92,255,.9),0 0 0 1px rgba(255,255,255,.12) inset;
-    display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
-    transition:transform .22s cubic-bezier(.2,.9,.3,1),box-shadow .22s;
-  }
+  .btn-top-nova{flex:1;height:54px;border-radius:17px;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:-.2px;color:#fff;background:linear-gradient(135deg,#7c5cff,#5b3df5 55%,#3ddcff 140%);box-shadow:0 12px 30px -10px rgba(124,92,255,.9),0 0 0 1px rgba(255,255,255,.12) inset;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:transform .22s cubic-bezier(.2,.9,.3,1),box-shadow .22s}
   .btn-top-nova:hover{transform:translateY(-2px);box-shadow:0 16px 38px -10px rgba(124,92,255,1)}
   .btn-top-nova:active{transform:scale(.97)}
 
@@ -117,6 +101,31 @@
   .tag.atras{background:rgba(255,92,124,.14);color:#ff9db2;border-color:rgba(255,92,124,.25)}
   .tag.voz{background:rgba(61,220,255,.14);color:#7ee6ff;border-color:rgba(61,220,255,.3)}
   .tag.foto{background:rgba(255,181,71,.14);color:#ffc46e;border-color:rgba(255,181,71,.3)}
+
+  /* Fotos nos cards */
+  .card-fotos{display:grid;gap:8px;margin-top:12px}
+  .card-fotos.single{grid-template-columns:1fr}
+  .card-fotos.multi{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:400px){.card-fotos.multi{grid-template-columns:repeat(2,1fr)}}
+  .card-foto{border-radius:10px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.08);cursor:zoom-in;transition:transform .2s,border-color .2s;position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+  .card-fotos.single .card-foto{aspect-ratio:auto;max-height:220px}
+  .card-foto:hover{transform:scale(1.02);border-color:rgba(124,92,255,.4)}
+  .card-foto img{width:100%;height:100%;object-fit:cover;display:block;max-height:220px}
+  .card-fotos.single .card-foto img{width:auto;max-width:100%;object-fit:contain}
+  .card-foto .foto-badge{position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:8px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;font-weight:700;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);font-variant-numeric:tabular-nums}
+
+  /* Lightbox */
+  .lightbox{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;padding:60px 70px;cursor:zoom-out}
+  .lightbox.on{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;user-select:none;-webkit-user-drag:none}
+  .lightbox-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(30,30,40,.92);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:.2s;font-family:inherit;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2}
+  .lightbox-close:hover{background:rgba(255,92,124,.9);border-color:transparent}
+  .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(30,30,40,.92);color:#fff;font-size:28px;cursor:pointer;display:none;place-items:center;transition:.2s;font-family:inherit;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2;line-height:1;padding-bottom:5px}
+  .lightbox-nav:hover{background:rgba(124,92,255,.9);border-color:transparent}
+  .lightbox-prev{left:14px}
+  .lightbox-next{right:14px}
+  .lightbox-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:20px;background:rgba(30,30,40,.92);color:#fff;font-size:13px;font-weight:600;font-family:inherit;border:1px solid rgba(255,255,255,.15);font-variant-numeric:tabular-nums;display:none}
+  @media(max-width:500px){.lightbox{padding:60px 12px}.lightbox-nav{width:40px;height:40px;font-size:22px}.lightbox-prev{left:6px}.lightbox-next{right:6px}}
 
   .card.extintor{padding:16px 16px 62px;border-width:1.5px;flex-direction:column;gap:0}
   .card.extintor .check{position:absolute;top:16px;right:16px;margin:0}
@@ -183,8 +192,6 @@
   .camera-form-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:13px;border:1px solid rgba(255,181,71,.4);background:rgba(255,181,71,.12);color:#ffc46e;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;flex:0 0 auto}
   .camera-form-btn:hover{background:rgba(255,181,71,.24);border-color:rgba(255,181,71,.65);color:#ffd699}
   .camera-form-btn .em{font-size:16px;line-height:1}
-  .camera-form-btn.busy{opacity:.6;pointer-events:none}
-  .camera-form-btn.busy .em{animation:gira 1s linear infinite;display:inline-block}
   .camera-form-btn.galeria{border-color:rgba(61,220,255,.4);background:rgba(61,220,255,.12);color:#7ee6ff}
   .camera-form-btn.galeria:hover{background:rgba(61,220,255,.24);border-color:rgba(61,220,255,.65);color:#aef1ff}
 
@@ -194,8 +201,6 @@
   textarea{resize:vertical;min-height:100px;line-height:1.55;font-family:inherit}
   input::placeholder,textarea::placeholder{color:#5c6479}
   input:focus,textarea:focus,select:focus{border-color:rgba(124,92,255,.75);background:rgba(124,92,255,.08);box-shadow:0 0 0 4px rgba(124,92,255,.13)}
-  input.preenchido-ia, textarea.preenchido-ia{animation:flashFill 1.1s ease}
-  @keyframes flashFill{0%{background:rgba(255,181,71,.28);border-color:rgba(255,181,71,.6)}100%{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.09)}}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip-opt{padding:9px 14px;border-radius:12px;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--card-brd);transition:.2s}
@@ -217,6 +222,17 @@
   #campoHora{overflow:hidden;max-height:0;opacity:0;transition:.3s ease}
   #campoHora.on{max-height:130px;opacity:1;margin-top:13px}
 
+  /* Fotos no formulário (múltiplas) */
+  #campoFotoForm[hidden]{display:none}
+  .fotos-form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:9px}
+  .foto-item{position:relative;border-radius:12px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.1);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+  .foto-item img{width:100%;height:100%;object-fit:cover;display:block}
+  .foto-item-remove{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,92,124,.94);color:#fff;font-size:12px;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.5);transition:.2s;font-family:inherit;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:2}
+  .foto-item-remove:hover{background:rgba(255,92,124,1);transform:scale(1.1)}
+  .foto-item-remove:active{transform:scale(.95)}
+  .foto-form-hint{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#8b93a8;margin-top:10px;font-weight:500;line-height:1.5}
+  .foto-form-hint .em{font-size:13px;flex:0 0 auto}
+
   .acoes{display:flex;gap:11px;margin-top:26px}
   .btn{flex:1;padding:15px;border-radius:15px;border:1px solid var(--card-brd);background:rgba(255,255,255,.05);color:var(--txt);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
   .btn:hover{background:rgba(255,255,255,.1)}
@@ -227,15 +243,6 @@
   .btn.perigo{border:none;color:#fff;background:linear-gradient(135deg,#ff5c7c,#e0437d);box-shadow:0 12px 30px -10px rgba(255,92,124,.95)}
   .btn.perigo:hover{filter:brightness(1.1)}
   .btn:disabled{opacity:.4;cursor:not-allowed}
-
-  .form-ia-status{display:none;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;margin-bottom:14px;font-size:12.5px;font-weight:600;line-height:1.4}
-  .form-ia-status.on{display:flex}
-  .form-ia-status .spinner{width:15px;height:15px;flex:0 0 15px;border-radius:50%;border:2px solid rgba(255,181,71,.25);border-top-color:#ffb547;animation:gira .8s linear infinite}
-  .form-ia-status.ok{background:rgba(46,230,168,.08);border:1px solid rgba(46,230,168,.35);color:#5ff0bd}
-  .form-ia-status.ok .spinner{display:none}
-  .form-ia-status.erro{background:rgba(255,92,124,.08);border:1px solid rgba(255,92,124,.35);color:#ff9db2}
-  .form-ia-status.erro .spinner{display:none}
-  @keyframes gira{to{transform:rotate(360deg)}}
 
   .overlay.voz{align-items:center;padding:14px}
   .voz-box{width:100%;max-width:460px;max-height:94vh;overflow-y:auto;background:linear-gradient(180deg,#151a2c,#0e1120);border:1px solid rgba(255,255,255,.11);border-radius:30px;padding:24px 22px 18px;box-shadow:0 34px 90px -22px rgba(0,0,0,.95),0 0 0 1px rgba(124,92,255,.14);transform:scale(.92);transition:transform .34s cubic-bezier(.2,.9,.3,1)}
@@ -284,125 +291,6 @@
   .voz-acoes{display:flex;gap:9px;margin-top:14px}
   .voz-acoes[hidden]{display:none}
   .voz-acoes .btn{font-size:14px;padding:13px}
-
-  .overlay.foto{align-items:center;padding:14px}
-  .foto-box{width:100%;max-width:520px;max-height:94vh;overflow-y:auto;background:linear-gradient(180deg,#1a1620,#0e0b14);border:1px solid rgba(255,181,71,.25);border-radius:30px;padding:18px 20px 18px;box-shadow:0 34px 90px -22px rgba(0,0,0,.95),0 0 0 1px rgba(255,181,71,.1);transform:scale(.92);transition:transform .34s cubic-bezier(.2,.9,.3,1)}
-  .overlay.foto.on .foto-box{transform:scale(1)}
-  .foto-box::-webkit-scrollbar{width:5px}
-  .foto-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
-  .foto-fechar-row{display:flex;justify-content:flex-end;margin-bottom:10px}
-  .foto-header-close{width:36px;height:36px;border-radius:12px;border:1px solid var(--card-brd);background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;cursor:pointer;display:grid;place-items:center;transition:.2s;font-family:inherit}
-  .foto-header-close:hover{background:rgba(255,92,124,.16);color:#ff8098;border-color:rgba(255,92,124,.3)}
-
-  .foto-modo{display:flex;gap:8px;padding:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:14px;margin-bottom:14px}
-  .foto-modo button{flex:1;padding:11px 8px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:transparent;transition:.2s}
-  .foto-modo button:hover{color:#fff}
-  .foto-modo button.on{background:linear-gradient(135deg,#ffb547,#e6930f);color:#0b0d17;box-shadow:0 8px 22px -10px rgba(255,181,71,.95)}
-
-  .foto-guia{padding:14px;border-radius:18px;margin-bottom:14px;background:linear-gradient(135deg,rgba(255,181,71,.08),rgba(124,92,255,.06));border:1px solid rgba(255,181,71,.22)}
-  .foto-guia-titulo{font-size:12px;font-weight:800;color:#ffc46e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
-  .foto-guia-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .guia-item{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:#c9cfe0;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);line-height:1.3}
-  .guia-item .em{font-size:14px;flex:0 0 auto}
-  .guia-item.destacado{background:rgba(61,220,255,.08);border-color:rgba(61,220,255,.25);color:#7ee6ff}
-  .guia-item.destacado2{background:rgba(255,92,124,.08);border-color:rgba(255,92,124,.22);color:#ff9db2}
-
-  .foto-dica-camera{padding:11px 13px;border-radius:12px;margin-bottom:14px;background:rgba(61,220,255,.08);border:1px solid rgba(61,220,255,.22);color:#7ee6ff;font-size:12px;line-height:1.5;display:flex;gap:9px;align-items:flex-start}
-  .foto-dica-camera .em{font-size:15px;flex:0 0 auto;line-height:1.2}
-
-  .foto-erro{padding:14px 16px;border-radius:14px;margin-bottom:14px;background:rgba(255,92,124,.10);border:1px solid rgba(255,92,124,.3);color:#ff9db2;font-size:13px;line-height:1.6;display:none}
-  .foto-erro.on{display:block}
-  .foto-erro strong{display:block;font-weight:700;margin-bottom:5px;font-size:13.5px;color:#ff8098}
-
-  .camera-btn{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:24px 20px;border-radius:22px;cursor:pointer;font-family:inherit;color:#fff;background:linear-gradient(135deg,#ffb547,#e6930f);box-shadow:0 16px 40px -10px rgba(255,181,71,.9), 0 0 0 1px rgba(255,255,255,.14) inset;border:none;transition:transform .22s cubic-bezier(.2,.9,.3,1),box-shadow .22s,filter .2s;margin-bottom:12px}
-  .camera-btn:hover{transform:translateY(-3px);box-shadow:0 20px 50px -10px rgba(255,181,71,1);filter:brightness(1.05)}
-  .camera-btn:active{transform:scale(.98)}
-  .camera-btn .camera-emoji{font-size:44px;line-height:1}
-  .camera-btn .camera-titulo{font-size:16px;font-weight:800;letter-spacing:-.3px}
-  .camera-btn .camera-sub{font-size:12.5px;font-weight:600;color:rgba(11,13,23,.72)}
-
-  .galeria-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px 20px;border-radius:16px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:#7ee6ff;background:rgba(61,220,255,.10);border:1px solid rgba(61,220,255,.35);transition:.2s;margin-bottom:12px}
-  .galeria-btn:hover{background:rgba(61,220,255,.20);border-color:rgba(61,220,255,.6);transform:translateY(-2px)}
-  .galeria-btn:active{transform:scale(.98)}
-  .galeria-btn .em{font-size:20px;line-height:1}
-
-  .foto-abertura-aviso{display:flex;align-items:center;gap:10px;justify-content:center;padding:11px 13px;border-radius:12px;margin-top:2px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#8b93a8;line-height:1.45;text-align:center}
-
-  .foto-preview{border-radius:18px;overflow:hidden;margin-bottom:14px;background:#000;border:1px solid rgba(255,255,255,.09);max-height:240px;display:flex;align-items:center;justify-content:center}
-  .foto-preview img{max-width:100%;max-height:240px;display:block;object-fit:contain}
-  .foto-preview[hidden]{display:none}
-
-  .foto-status{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:13px;margin-bottom:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);font-size:13px;font-weight:600;color:#c9cfe0;line-height:1.4}
-  .foto-status[hidden]{display:none}
-  .foto-status .spinner{width:16px;height:16px;flex:0 0 16px;border-radius:50%;border:2px solid rgba(124,92,255,.25);border-top-color:#7c5cff;animation:gira .8s linear infinite}
-  .foto-status.ok{border-color:rgba(46,230,168,.35);background:rgba(46,230,168,.08);color:#5ff0bd}
-  .foto-status.ok .spinner{display:none}
-  .foto-status.erro{border-color:rgba(255,92,124,.35);background:rgba(255,92,124,.08);color:#ff9db2}
-  .foto-status.erro .spinner{display:none}
-  .foto-prog{height:4px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:14px}
-  .foto-prog[hidden]{display:none}
-  .foto-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#3ddcff);border-radius:9px;transition:width .3s ease}
-
-  .rev-painel{animation:entra .35s ease both}
-  .rev-painel[hidden]{display:none}
-  .rev-cabec{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;margin-bottom:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)}
-  .rev-cabec.status-verde{background:rgba(46,230,168,.1);border-color:rgba(46,230,168,.4)}
-  .rev-cabec.status-amarelo{background:rgba(255,181,71,.1);border-color:rgba(255,181,71,.42)}
-  .rev-cabec.status-vermelho{background:rgba(255,92,124,.1);border-color:rgba(255,92,124,.45)}
-  .rev-cabec.status-cinza{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
-  .rev-cabec-icone{width:52px;height:52px;flex:0 0 52px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:rgba(255,255,255,.06)}
-  .rev-cabec.status-verde .rev-cabec-icone{background:linear-gradient(135deg,#2ee6a8,#12b981)}
-  .rev-cabec.status-amarelo .rev-cabec-icone{background:linear-gradient(135deg,#ffb547,#e6930f)}
-  .rev-cabec.status-vermelho .rev-cabec-icone{background:linear-gradient(135deg,#ff5c7c,#e0437d)}
-  .rev-cabec-txt{flex:1;min-width:0}
-  .rev-cabec-titulo{font-size:15.5px;font-weight:800;letter-spacing:-.2px;line-height:1.25}
-  .rev-cabec-sub{font-size:12.5px;color:#a9b0c4;margin-top:3px;font-weight:500;line-height:1.4}
-  .rev-cabec-status{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:5px 10px;border-radius:9px;border:1px solid;white-space:nowrap;flex:0 0 auto}
-  .rev-cabec.status-verde .rev-cabec-status{background:rgba(46,230,168,.2);color:#5ff0bd;border-color:rgba(46,230,168,.5)}
-  .rev-cabec.status-amarelo .rev-cabec-status{background:rgba(255,181,71,.2);color:#ffc46e;border-color:rgba(255,181,71,.5)}
-  .rev-cabec.status-vermelho .rev-cabec-status{background:rgba(255,92,124,.2);color:#ff9db2;border-color:rgba(255,92,124,.55)}
-  .rev-cabec.status-cinza .rev-cabec-status{background:rgba(139,147,168,.16);color:#9aa2b8;border-color:rgba(139,147,168,.3)}
-
-  .rev-titulo-sec{font-size:10.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:#8b93a8;margin-bottom:10px;display:flex;align-items:center;gap:7px}
-  .rev-titulo-sec::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
-
-  .rev-campos{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px}
-  @media(max-width:420px){.rev-campos{grid-template-columns:1fr}}
-  .rev-campo{padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);transition:.2s}
-  .rev-campo.destaque{grid-column:1 / -1;border-color:rgba(61,220,255,.4);background:rgba(61,220,255,.06)}
-  .rev-campo.destaque2{grid-column:1 / -1;border-color:rgba(255,92,124,.4);background:rgba(255,92,124,.06)}
-  .rev-campo.vazio{border-color:rgba(255,181,71,.5);background:rgba(255,181,71,.06);animation:pulsaAviso 1.8s infinite}
-  @keyframes pulsaAviso{0%,100%{box-shadow:0 0 0 0 rgba(255,181,71,0)}50%{box-shadow:0 0 0 6px rgba(255,181,71,.13)}}
-  .rev-campo .rc-lbl{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#8b93a8;margin-bottom:6px}
-  .rev-campo.destaque .rc-lbl{color:#7ee6ff}
-  .rev-campo.destaque2 .rc-lbl{color:#ff9db2}
-  .rev-campo.vazio .rc-lbl{color:#ffc46e}
-  .rev-campo .rc-lbl .em{font-size:12px}
-  .rev-campo input{background:transparent;border:none;padding:0;font-size:14.5px;font-weight:600;color:#eef1f8;outline:none;width:100%;font-family:inherit;font-variant-numeric:tabular-nums}
-  .rev-campo input:focus{color:#fff}
-  .rev-campo input::placeholder{color:#4a5065;font-weight:500;font-style:italic}
-
-  .rev-chips-local{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;padding-top:9px;border-top:1px dashed rgba(255,255,255,.1)}
-  .rev-chips-local .rc-lbl-mini{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#5c6479;width:100%;margin-bottom:2px}
-  .rev-chips-local button{padding:6px 10px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:#a9b0c4;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);transition:.15s}
-  .rev-chips-local button:hover{color:#fff;background:rgba(124,92,255,.18);border-color:rgba(124,92,255,.45);transform:translateY(-1px)}
-  .rev-chips-local button:active{transform:scale(.96)}
-  .rev-chips-local button.on{background:linear-gradient(135deg,#7c5cff,#5b3df5);color:#fff;border-color:transparent}
-
-  .rev-datas-aviso{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:12px;margin-bottom:16px;background:rgba(61,220,255,.07);border:1px solid rgba(61,220,255,.2);color:#7ee6ff;font-size:12px;line-height:1.5}
-  .rev-datas-aviso .em{font-size:15px;flex:0 0 auto}
-
-  .rev-texto-box{margin-bottom:14px;border-radius:13px;overflow:hidden;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.07)}
-  .rev-texto-box summary{padding:11px 14px;cursor:pointer;list-style:none;font-size:12.5px;font-weight:700;color:#a9b0c4;display:flex;align-items:center;gap:8px;transition:.2s}
-  .rev-texto-box summary:hover{color:#fff;background:rgba(255,255,255,.03)}
-  .rev-texto-box summary::-webkit-details-marker{display:none}
-  .rev-texto-box summary::after{content:'▾';margin-left:auto;transition:.2s;opacity:.6}
-  .rev-texto-box[open] summary::after{transform:rotate(180deg)}
-  .rev-texto-box .rev-texto-conteudo{padding:0 12px 12px}
-  .rev-texto-box textarea{min-height:80px;max-height:180px;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:11.5px;line-height:1.55;background:rgba(255,255,255,.035)}
-
-  .rev-acoes{display:flex;gap:9px;margin-top:6px}
-  .rev-acoes .btn{font-size:14px;padding:14px}
 
   .overlay.relatorio{align-items:center;padding:14px;z-index:75}
   .rel-box{width:100%;max-width:540px;max-height:94vh;overflow-y:auto;background:linear-gradient(180deg,#0f1a16,#0a1310);border:1px solid rgba(37,211,102,.25);border-radius:30px;padding:22px 20px 18px;box-shadow:0 34px 90px -22px rgba(0,0,0,.95),0 0 0 1px rgba(37,211,102,.1);transform:scale(.92);transition:transform .34s cubic-bezier(.2,.9,.3,1)}
@@ -495,13 +383,10 @@
     .ext-grid{grid-template-columns:1fr 1fr 1fr;gap:6px}
     .ext-stat .n{font-size:18px}
     .icone-btn{width:40px;height:40px;flex:0 0 40px;font-size:16px}
-    .rev-campos{grid-template-columns:1fr}
-    .foto-guia-grid{grid-template-columns:1fr}
     .contato-chip .contato-nome{max-width:100px}
-    .camera-btn .camera-emoji{font-size:38px}
-    .camera-btn .camera-titulo{font-size:15px}
     .camera-form-btn{padding:8px 10px;font-size:11.5px;gap:4px}
     .camera-form-btn .txt{display:inline}
+    .fotos-form-grid{grid-template-columns:repeat(auto-fill,minmax(85px,1fr))}
   }
 
   .boot{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);transition:opacity .4s ease}
@@ -536,7 +421,6 @@
     </div>
   </header>
 
-  <!-- Ações principais no TOPO (mic + nova tarefa) -->
   <div class="top-acoes">
     <button class="btn-top-mic" id="btnFalar" title="Registrar por voz">🎤</button>
     <button class="btn-top-nova" id="btnNova">+ Nova tarefa</button>
@@ -570,7 +454,7 @@
     <div class="form-header">
       <h2 id="tituloModal">Nova tarefa</h2>
       <div class="form-header-acoes">
-        <button class="camera-form-btn" id="btnCameraForm" type="button" title="Tirar foto e preencher">
+        <button class="camera-form-btn" id="btnCameraForm" type="button" title="Tirar foto">
           <span class="em">📷</span>
           <span class="txt">Foto</span>
         </button>
@@ -581,9 +465,10 @@
       </div>
     </div>
 
-    <div class="form-ia-status" id="formIaStatus">
-      <span class="spinner"></span>
-      <span id="formIaStatusTxt">Analisando foto…</span>
+    <div class="field" id="campoFotoForm" hidden>
+      <label>Fotos anexadas</label>
+      <div class="fotos-form-grid" id="fotosFormGrid"></div>
+      <div class="foto-form-hint"><span class="em">💡</span><span>Toque no ✕ para remover uma foto ou adicione mais usando 📷 ou 🖼️</span></div>
     </div>
 
     <div class="field">
@@ -634,79 +519,6 @@
     <div class="voz-acoes" id="vozAcoes" hidden>
       <button class="btn" id="vozRepetir">↻ Limpar</button>
       <button class="btn prim" id="vozSalvar">✓ Salvar</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay foto" id="overlayFoto">
-  <div class="foto-box">
-    <div class="foto-fechar-row">
-      <button class="foto-header-close" id="fotoFechar">✕</button>
-    </div>
-    <div id="fotoEtapa1">
-      <div class="foto-modo">
-        <button data-modo="extintor" class="on">🧯 Extintor</button>
-        <button data-modo="auto">🤖 Outros</button>
-      </div>
-      <div class="foto-guia" id="fotoGuia">
-        <div class="foto-guia-titulo"><span class="em">🎯</span> A IA vai procurar na etiqueta:</div>
-        <div class="foto-guia-grid">
-          <span class="guia-item"><span class="em">🔢</span>Nº do extintor</span>
-          <span class="guia-item"><span class="em">🧪</span>Tipo (PQS / CO₂ / Água)</span>
-          <span class="guia-item"><span class="em">⚖️</span>Capacidade (4kg / 6L)</span>
-          <span class="guia-item destacado"><span class="em">📍</span>Local / Setor / Andar</span>
-          <span class="guia-item"><span class="em">🔧</span>Fabricação</span>
-          <span class="guia-item destacado2"><span class="em">📅</span>Validade / Vencimento</span>
-          <span class="guia-item"><span class="em">♻️</span>Última recarga</span>
-          <span class="guia-item"><span class="em">🏷️</span>Classe (A / B / C)</span>
-        </div>
-      </div>
-      <div class="foto-dica-camera"><span class="em">💡</span><span>Enquadre <b>só a etiqueta</b>, com boa luz, sem reflexo e sem tremer.</span></div>
-      <div class="foto-erro" id="fotoErro"></div>
-      <button class="camera-btn" id="btnAbrirCamera" type="button">
-        <span class="camera-emoji">📸</span>
-        <span class="camera-titulo">Abrir câmera e tirar foto</span>
-        <span class="camera-sub">Use a câmera para registrar a foto</span>
-      </button>
-      <button class="galeria-btn" id="btnAbrirGaleria" type="button">
-        <span class="em">🖼️</span>
-        <span>Escolher da galeria</span>
-      </button>
-      <div class="foto-abertura-aviso">
-        <span>📱</span>
-        <span>A câmera abre direto no seu celular ou webcam do computador.</span>
-      </div>
-      <input type="file" id="inputCamera" accept="image/*" capture="environment" hidden>
-      <input type="file" id="inputGaleria" accept="image/*" hidden>
-    </div>
-    <div id="fotoEtapa2" hidden>
-      <div class="foto-preview" id="fotoPreview"><img id="fotoImg" alt="Pré-visualização"></div>
-      <div class="foto-prog" id="fotoProg" hidden><div class="foto-prog-bar" id="fotoProgBar"></div></div>
-      <div class="foto-status" id="fotoStatus" hidden><span class="spinner"></span><span id="fotoStatusTxt">Preparando…</span></div>
-    </div>
-    <div id="fotoEtapa3" class="rev-painel" hidden>
-      <div class="rev-cabec" id="revCabec">
-        <div class="rev-cabec-icone" id="revIcone">🧯</div>
-        <div class="rev-cabec-txt">
-          <div class="rev-cabec-titulo" id="revTitulo">Extintor</div>
-          <div class="rev-cabec-sub" id="revSub">Confira os dados abaixo</div>
-        </div>
-        <span class="rev-cabec-status" id="revStatus">—</span>
-      </div>
-      <div class="rev-titulo-sec">📋 Dados extraídos <span style="opacity:.6;font-weight:600;letter-spacing:0;text-transform:none">— toque para editar</span></div>
-      <div class="rev-campos" id="revCampos"></div>
-      <div class="rev-datas-aviso"><span class="em">💡</span><span>O status <b>verde / amarelo / vermelho</b> é recalculado automaticamente pela <b>Validade</b>. Se o local veio errado, use os <b>atalhos rápidos</b>.</span></div>
-      <details class="rev-texto-box">
-        <summary>📝 Ver texto completo reconhecido pela IA</summary>
-        <div class="rev-texto-conteudo">
-          <textarea id="fotoTexto" placeholder="Texto lido da imagem…" maxlength="2000"></textarea>
-          <button class="btn" id="fotoReanalisar" style="margin-top:8px;width:100%;font-size:13px;padding:11px">🔍 Reinterpretar este texto</button>
-        </div>
-      </details>
-      <div class="rev-acoes">
-        <button class="btn" id="fotoNova">📷 Tirar outra</button>
-        <button class="btn prim" id="fotoSalvar">✓ Salvar extintor</button>
-      </div>
     </div>
   </div>
 </div>
@@ -835,24 +647,20 @@
   </div>
 </div>
 
-<!-- MODAL DE ENVIO WHATSAPP DE UMA OCORRÊNCIA -->
 <div class="overlay contato" id="overlayZapItem">
   <div class="contato-box" style="max-width:440px">
     <h3>💬 Enviar pelo WhatsApp</h3>
     <div class="contato-sub" id="zapItemSub">Escolha para quem enviar ou apenas abra o WhatsApp.</div>
-
     <div class="campo">
       <label>Enviar para</label>
       <div class="rel-contatos" id="zapItemContatos"></div>
     </div>
-
     <div class="campo">
       <label>Pré-visualização</label>
       <div class="rel-preview-box" style="padding:12px">
         <textarea id="zapItemPreview" spellcheck="false" style="width:100%;background:transparent;border:none;color:#d8e6dc;font-family:'SF Mono',Consolas,Monaco,monospace;font-size:11.5px;line-height:1.55;outline:none;resize:vertical;min-height:140px;max-height:220px;padding:2px 0;white-space:pre-wrap;word-break:break-word"></textarea>
       </div>
     </div>
-
     <div class="contato-acoes" style="flex-direction:column">
       <button class="rel-btn-zap" id="zapItemEnviar" style="width:100%;padding:14px;font-size:14.5px">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -864,6 +672,14 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fechar">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Anterior">‹</button>
+  <img id="lightboxImg" alt="Foto ampliada">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Próxima">›</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1041,17 +857,18 @@ let editandoId = null;
 let catSel = 'trabalho';
 let prioSel = 'media';
 let lembreteOn = false;
-let modoFoto = 'extintor';
 let relEscopo = 'tudo';
 let relFormato = 'detalhado';
 let relIncluirConcluidas = false;
-let itemFoto = null;
-let tesseractCarregado = false;
-let imgUrlAtual = null;
-let processandoFoto = false;
 let itemZapAtual = null;
 let zapItemContato = null;
-let extintorDadosPendentes = null;
+
+/* Estado das FOTOS no formulário — array! */
+let fotosPendentes = []; // { id, objUrl, dataUrl, promise }
+
+/* Lightbox */
+let lightboxFotos = [];
+let lightboxIdx = 0;
 
 const CATS = {
   trabalho:  { icon:'💼', label:'Trabalho',   cor:'#7c5cff' },
@@ -1108,6 +925,106 @@ function atualizarRelogio(){
 }
 function conteudoDe(i){
   return (i.descricao && i.descricao.trim()) || (i.titulo && i.titulo.trim()) || 'Sem descrição';
+}
+
+/* Retorna array de fotos de um item (compatível com campo antigo fotoDataUrl) */
+function getFotosItem(item){
+  if(!item) return [];
+  if(Array.isArray(item.fotosDataUrl) && item.fotosDataUrl.length > 0) return item.fotosDataUrl.filter(Boolean);
+  if(item.fotoDataUrl) return [item.fotoDataUrl];
+  return [];
+}
+
+/* ============================================================
+   FOTOS — helpers
+============================================================ */
+function fileToDataURL(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error || new Error('Erro de leitura'));
+    reader.readAsDataURL(file);
+  });
+}
+function redimensionarParaDataURL(file, maxLado = 1200, qualidade = 0.82){
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      try{
+        let w = img.width, h = img.height;
+        const maior = Math.max(w, h);
+        if(maior > maxLado){
+          const esc = maxLado / maior;
+          w = Math.round(w * esc);
+          h = Math.round(h * esc);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', qualidade);
+        URL.revokeObjectURL(url);
+        resolve(dataUrl);
+      }catch(e){
+        URL.revokeObjectURL(url);
+        reject(e);
+      }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Erro ao carregar imagem')); };
+    img.src = url;
+  });
+}
+
+/* Adiciona uma foto à lista pendente (múltiplas) */
+function adicionarFotoPendente(file){
+  if(!file) return;
+  const id = uid();
+  const objUrl = URL.createObjectURL(file);
+  const foto = { id, objUrl, dataUrl: null, promise: null };
+  fotosPendentes.push(foto);
+  renderFotosForm(); // aparece NA HORA
+
+  foto.promise = (async () => {
+    try {
+      foto.dataUrl = await redimensionarParaDataURL(file, 1200, 0.82);
+    } catch(e){
+      try { foto.dataUrl = await fileToDataURL(file); }
+      catch(err){ foto.dataUrl = null; }
+    }
+  })();
+}
+
+function removerFotoPendente(id){
+  const idx = fotosPendentes.findIndex(f => f.id === id);
+  if(idx < 0) return;
+  const foto = fotosPendentes[idx];
+  if(foto.objUrl){ try { URL.revokeObjectURL(foto.objUrl); } catch(e){} }
+  fotosPendentes.splice(idx, 1);
+  renderFotosForm();
+}
+
+function renderFotosForm(){
+  const campo = document.getElementById('campoFotoForm');
+  const grid = document.getElementById('fotosFormGrid');
+  if(fotosPendentes.length === 0){
+    campo.hidden = true;
+    grid.innerHTML = '';
+    return;
+  }
+  campo.hidden = false;
+  grid.innerHTML = fotosPendentes.map((f, idx) => `
+    <div class="foto-item">
+      <img src="${f.objUrl || f.dataUrl || ''}" alt="Foto ${idx+1}">
+      <button type="button" class="foto-item-remove" data-remove-foto="${f.id}" title="Remover">✕</button>
+    </div>
+  `).join('');
+}
+
+function limparFotosPendentes(){
+  fotosPendentes.forEach(f => { if(f.objUrl){ try { URL.revokeObjectURL(f.objUrl); } catch(e){} } });
+  fotosPendentes = [];
+  renderFotosForm();
 }
 
 /* ============================================================
@@ -1334,6 +1251,61 @@ document.getElementById('confConfirmar').addEventListener('click', async ()=>{
 });
 
 /* ============================================================
+   LIGHTBOX (galeria de fotos)
+============================================================ */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCounter = document.getElementById('lightboxCounter');
+const lightboxPrevEl = document.getElementById('lightboxPrev');
+const lightboxNextEl = document.getElementById('lightboxNext');
+
+function abrirLightbox(fotos, idx = 0){
+  if(!fotos || !fotos.length) return;
+  lightboxFotos = fotos.slice();
+  lightboxIdx = Math.max(0, Math.min(idx, fotos.length - 1));
+  mostrarFotoLightbox();
+  lightbox.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function mostrarFotoLightbox(){
+  if(!lightboxFotos.length){ fecharLightbox(); return; }
+  lightboxImg.src = lightboxFotos[lightboxIdx];
+  if(lightboxFotos.length > 1){
+    lightboxCounter.textContent = `${lightboxIdx + 1} / ${lightboxFotos.length}`;
+    lightboxCounter.style.display = 'block';
+    lightboxPrevEl.style.display = 'grid';
+    lightboxNextEl.style.display = 'grid';
+  } else {
+    lightboxCounter.style.display = 'none';
+    lightboxPrevEl.style.display = 'none';
+    lightboxNextEl.style.display = 'none';
+  }
+}
+function fotoLightboxPrev(){
+  if(lightboxFotos.length <= 1) return;
+  lightboxIdx = (lightboxIdx - 1 + lightboxFotos.length) % lightboxFotos.length;
+  mostrarFotoLightbox();
+}
+function fotoLightboxNext(){
+  if(lightboxFotos.length <= 1) return;
+  lightboxIdx = (lightboxIdx + 1) % lightboxFotos.length;
+  mostrarFotoLightbox();
+}
+function fecharLightbox(){
+  lightbox.classList.remove('on');
+  lightboxImg.removeAttribute('src');
+  lightboxFotos = [];
+  lightboxIdx = 0;
+  document.body.style.overflow = '';
+}
+lightbox.addEventListener('click', (e) => {
+  if(e.target === lightbox || e.target === lightboxImg){ fecharLightbox(); }
+});
+document.getElementById('lightboxClose').addEventListener('click', (e) => { e.stopPropagation(); fecharLightbox(); });
+lightboxPrevEl.addEventListener('click', (e) => { e.stopPropagation(); fotoLightboxPrev(); });
+lightboxNextEl.addEventListener('click', (e) => { e.stopPropagation(); fotoLightboxNext(); });
+
+/* ============================================================
    RENDER
 ============================================================ */
 function renderExtPanel(){
@@ -1417,12 +1389,36 @@ function renderCardTarefa(i, idx){
   const cat = CATS[i.categoria] || CATS.outro;
   const atrasado = i.data && i.data < hojeISO() && !i.concluido;
   const ehHoje = i.data === hojeISO();
+  const fotos = getFotosItem(i);
+
   let tags = '';
   if(i.data) tags += `<span class="tag ${ehHoje ? 'hoje' : (atrasado ? 'atras' : '')}">📅 ${fmtData(i.data)}</span>`;
   if(i.hora) tags += `<span class="tag">🕐 ${i.hora}</span>`;
   if(i.lembrete) tags += `<span class="tag lembrete">⏰ Lembrete ${i.horaLembrete || ''}</span>`;
   if(i.porVoz) tags += `<span class="tag voz">🎤 Voz</span>`;
-  if(i.porFoto) tags += `<span class="tag foto">📷 Foto</span>`;
+  if(fotos.length) tags += `<span class="tag foto">📷 ${fotos.length > 1 ? fotos.length + ' fotos' : 'Foto'}</span>`;
+
+  let fotosHtml = '';
+  if(fotos.length === 1){
+    fotosHtml = `
+      <div class="card-fotos single">
+        <div class="card-foto" data-foto-card="${i.id}" data-foto-idx="0">
+          <img src="${fotos[0]}" loading="lazy" alt="Foto">
+        </div>
+      </div>
+    `;
+  } else if(fotos.length > 1){
+    fotosHtml = `
+      <div class="card-fotos multi">
+        ${fotos.map((url, fIdx) => `
+          <div class="card-foto" data-foto-card="${i.id}" data-foto-idx="${fIdx}">
+            <img src="${url}" loading="lazy" alt="Foto ${fIdx+1}">
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
   const conteudo = conteudoDe(i);
   return `
     <article class="card ${i.concluido ? 'done' : ''}" style="--c:${cat.cor};animation-delay:${Math.min(idx*38,300)}ms" data-id="${i.id}">
@@ -1431,6 +1427,7 @@ function renderCardTarefa(i, idx){
         <div class="linha1"><span class="cat">${cat.icon} ${cat.label}</span><span class="prio ${i.prioridade}">${PRIOS[i.prioridade]?.label || ''}</span></div>
         <h3>${escapar(conteudo)}</h3>
         ${tags ? `<div class="meta">${tags}</div>` : ''}
+        ${fotosHtml}
       </div>
       <div class="card-acoes">
         <button class="acao-btn editar" data-acao="editar" data-id="${i.id}" title="Editar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Editar</button>
@@ -1459,7 +1456,7 @@ function renderLista(){
   if(arr.length === 0){
     const msgs = {
       todas:      ['🗂️','Nada por aqui','Toque em “+ Nova tarefa” ou use o microfone para adicionar.'],
-      extintores: ['🧯','Nenhum extintor registrado','Tire uma foto da etiqueta para cadastrar automaticamente.'],
+      extintores: ['🧯','Nenhum extintor registrado','Use o microfone falando "extintor…" para cadastrar.'],
       hoje:       ['☀️','Nada para hoje','Nenhuma tarefa agendada para hoje.'],
       pendentes:  ['🎉','Tudo em dia!','Você não tem nada pendente.'],
       concluidas: ['📭','Nada concluído','Marque algo como feito para vê-lo aqui.']
@@ -1481,12 +1478,9 @@ const inputCameraForm = document.getElementById('inputCameraForm');
 const inputGaleriaForm = document.getElementById('inputGaleriaForm');
 const btnCameraForm = document.getElementById('btnCameraForm');
 const btnGaleriaForm = document.getElementById('btnGaleriaForm');
-const formIaStatus = document.getElementById('formIaStatus');
-const formIaStatusTxt = document.getElementById('formIaStatusTxt');
 
 function abrirModal(item = null){
   editandoId = item ? item.id : null;
-  extintorDadosPendentes = null;
   document.getElementById('tituloModal').textContent = item ? '✏️ Editar' : 'Nova tarefa';
   document.getElementById('fDesc').value = item ? (item.descricao || item.titulo || '') : '';
   document.getElementById('fData').value = item ? (item.data || '') : hojeISO();
@@ -1495,18 +1489,35 @@ function abrirModal(item = null){
   prioSel = item ? item.prioridade : 'media';
   lembreteOn = item ? !!item.lembrete : false;
   document.getElementById('fHoraLembrete').value = item?.horaLembrete || '09:00';
+
+  // Carrega fotos existentes
+  limparFotosPendentes();
+  if(item){
+    const fotos = getFotosItem(item);
+    fotosPendentes = fotos.map(url => ({
+      id: uid(),
+      objUrl: null,
+      dataUrl: url,
+      promise: null
+    }));
+    renderFotosForm();
+  }
+
   sincronizarChips(); sincronizarLembrete();
   btnCameraForm.style.display = 'inline-flex';
   btnGaleriaForm.style.display = 'inline-flex';
-  formIaStatus.classList.remove('on','ok','erro');
-  formIaStatusTxt.textContent = 'Analisando foto…';
   inputCameraForm.value = '';
   inputGaleriaForm.value = '';
   overlay.classList.add('on');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('fDesc').focus(), 320);
 }
-function fecharModal(){ overlay.classList.remove('on'); document.body.style.overflow=''; editandoId=null; extintorDadosPendentes=null; }
+function fecharModal(){
+  overlay.classList.remove('on');
+  document.body.style.overflow='';
+  editandoId=null;
+  limparFotosPendentes();
+}
 function sincronizarChips(){
   document.querySelectorAll('#chipsCat .chip-opt').forEach(b => b.classList.toggle('on', b.dataset.v === catSel));
   document.querySelectorAll('#chipsPrio .chip-opt').forEach(b => b.classList.toggle('on', b.dataset.v === prioSel));
@@ -1515,119 +1526,45 @@ function sincronizarLembrete(){
   document.getElementById('swLembrete').classList.toggle('on', lembreteOn);
   document.getElementById('campoHora').classList.toggle('on', lembreteOn);
 }
-function piscarCampo(el){
-  el.classList.remove('preenchido-ia');
-  void el.offsetWidth;
-  el.classList.add('preenchido-ia');
-  setTimeout(() => el.classList.remove('preenchido-ia'), 1300);
-}
-async function processarFotoNoForm(file){
-  if(!file) return;
-  formIaStatus.classList.remove('erro','ok');
-  formIaStatus.classList.add('on');
-  formIaStatusTxt.textContent = 'Carregando IA…';
-  btnCameraForm.classList.add('busy');
-  btnGaleriaForm.classList.add('busy');
-  try { await garantirTesseract(); }
-  catch(e){
-    formIaStatus.classList.remove('on','ok');
-    formIaStatus.classList.add('on','erro');
-    formIaStatusTxt.textContent = '⚠️ Sem internet para carregar a IA';
-    btnCameraForm.classList.remove('busy');
-    btnGaleriaForm.classList.remove('busy');
-    return;
-  }
-  formIaStatusTxt.textContent = 'Lendo a foto…';
-  let arquivo = file;
-  try { arquivo = await preprocessarImagem(file); } catch(e){}
-  try{
-    const resultado = await window.Tesseract.recognize(arquivo, 'por', {
-      logger: (m)=>{
-        if(m.status === 'recognizing text'){
-          const p = Math.round((m.progress || 0) * 100);
-          formIaStatusTxt.textContent = `Lendo… ${p}%`;
-        }
-      }
-    });
-    const texto = (resultado?.data?.text || '').trim();
-    if(!texto || texto.length < 3){
-      formIaStatus.classList.remove('on','ok');
-      formIaStatus.classList.add('on','erro');
-      formIaStatusTxt.textContent = '⚠️ Não consegui ler a imagem. Tente de novo, mais perto e com boa luz.';
-      btnCameraForm.classList.remove('busy');
-      btnGaleriaForm.classList.remove('busy');
-      return;
-    }
-    const detectouExt = ehExtintor(' ' + texto.toLowerCase() + ' ');
-    const dados = parseFala(texto, detectouExt ? 'extintor' : undefined);
-    const fDesc = document.getElementById('fDesc');
-    const fData = document.getElementById('fData');
-    const fHora = document.getElementById('fHora');
-    const fHoraLembrete = document.getElementById('fHoraLembrete');
-    if(dados.descricao){ fDesc.value = dados.descricao; piscarCampo(fDesc); }
-    if(dados.data){ fData.value = dados.data; piscarCampo(fData); }
-    if(dados.hora){ fHora.value = dados.hora; piscarCampo(fHora); }
-    if(dados.lembrete && dados.horaLembrete){ lembreteOn = true; fHoraLembrete.value = dados.horaLembrete; sincronizarLembrete(); piscarCampo(fHoraLembrete); }
-    if(dados.categoria && CATS[dados.categoria]){ catSel = dados.categoria; }
-    if(dados.prioridade && PRIOS[dados.prioridade]){ prioSel = dados.prioridade; }
-    if(editandoId && detectouExt){
-      extintorDadosPendentes = {
-        isExtintor: true,
-        tipoItem: 'extintor',
-        categoria: 'extintor',
-        numero: dados.numero || '',
-        tipo: dados.tipo || '',
-        capacidade: dados.capacidade || '',
-        local: dados.local || '',
-        fabricacao: dados.fabricacao || '',
-        validade: dados.validade || '',
-        recarga: dados.recarga || '',
-        prioridade: dados.prioridade,
-        data: dados.data,
-        lembrete: !!dados.lembrete,
-        horaLembrete: dados.horaLembrete || '09:00'
-      };
-    }
-    sincronizarChips();
-    formIaStatus.classList.remove('on','erro');
-    formIaStatus.classList.add('on','ok');
-    formIaStatusTxt.textContent = detectouExt
-      ? (editandoId ? '✓ Extintor detectado! Vai atualizar todos os campos ao salvar.' : '✓ Extintor detectado e campos preenchidos! Revise e salve.')
-      : '✓ Campos preenchidos automaticamente! Revise e salve.';
-    setTimeout(() => formIaStatus.classList.remove('on'), 6000);
-  }catch(err){
-    console.error('OCR (form) falhou:', err);
-    formIaStatus.classList.remove('on','ok');
-    formIaStatus.classList.add('on','erro');
-    formIaStatusTxt.textContent = '⚠️ Erro ao analisar a imagem. Tente novamente.';
-    setTimeout(() => formIaStatus.classList.remove('on'), 6000);
-  }finally{
-    btnCameraForm.classList.remove('busy');
-    btnGaleriaForm.classList.remove('busy');
-    inputCameraForm.value = '';
-    inputGaleriaForm.value = '';
-  }
-}
+
 btnCameraForm.addEventListener('click', () => inputCameraForm.click());
 btnGaleriaForm.addEventListener('click', () => inputGaleriaForm.click());
 inputCameraForm.addEventListener('change', e => {
   const f = e.target.files?.[0];
-  if(f) processarFotoNoForm(f);
+  if(f) adicionarFotoPendente(f);
+  inputCameraForm.value = '';
 });
 inputGaleriaForm.addEventListener('change', e => {
   const f = e.target.files?.[0];
-  if(f) processarFotoNoForm(f);
+  if(f) adicionarFotoPendente(f);
+  inputGaleriaForm.value = '';
 });
+
+// Delegação de remoção no grid
+document.getElementById('fotosFormGrid').addEventListener('click', e => {
+  const btn = e.target.closest('[data-remove-foto]');
+  if(btn) removerFotoPendente(btn.dataset.removeFoto);
+});
+
 async function salvarItem(){
   const descricao = document.getElementById('fDesc').value.trim();
   if(!descricao){ toast('⚠️ Preencha a descrição'); document.getElementById('fDesc').focus(); return; }
+
+  // Aguarda TODAS as conversões pendentes
+  const resultados = [];
+  for(const foto of fotosPendentes){
+    if(foto.promise){ try { await foto.promise; } catch(e){} }
+    if(foto.dataUrl) resultados.push(foto.dataUrl);
+  }
+
   const dados = {
     titulo: '', descricao,
     categoria: catSel, prioridade: prioSel,
     data: document.getElementById('fData').value || '',
     hora: document.getElementById('fHora').value || '',
     lembrete: lembreteOn,
-    horaLembrete: lembreteOn ? (document.getElementById('fHoraLembrete').value || '09:00') : ''
+    horaLembrete: lembreteOn ? (document.getElementById('fHoraLembrete').value || '09:00') : '',
+    fotosDataUrl: resultados
   };
   if(/^🧯\s*extintor/i.test(descricao) || catSel === 'extintor'){
     dados.isExtintor = true;
@@ -1637,11 +1574,10 @@ async function salvarItem(){
   try{
     if(editandoId){
       const atual = await DB.obter(editandoId);
-      const final = { ...atual, ...dados };
-      if(extintorDadosPendentes){
-        Object.assign(final, extintorDadosPendentes);
-      }
-      await DB.atualizar(final);
+      const merged = { ...atual, ...dados };
+      // Remove campo legado (single) para evitar duplicação
+      delete merged.fotoDataUrl;
+      await DB.atualizar(merged);
       toast('✏️ Atualizado');
     } else {
       await DB.criar({ id: uid(), ...dados, concluido: false, criadoEm: Date.now(), tipoItem: dados.tipoItem || 'tarefa' });
@@ -1661,6 +1597,7 @@ const zapItemEnviarTxt = document.getElementById('zapItemEnviarTxt');
 
 function gerarTextoItem(i){
   const linhas = [];
+  const fotos = getFotosItem(i);
   if(i.isExtintor){
     const partes = [];
     if(i.numero) partes.push(`Nº ${i.numero}`);
@@ -1686,6 +1623,8 @@ function gerarTextoItem(i){
     if(i.lembrete && i.horaLembrete) meta.push(`⏰ Lembrete: ${i.horaLembrete}`);
     if(i.prioridade && PRIOS[i.prioridade]) meta.push(`⚡ Prioridade: ${PRIOS[i.prioridade].label}`);
     if(i.concluido) meta.push('✅ Concluída');
+    if(fotos.length === 1) meta.push('📷 Com 1 foto');
+    else if(fotos.length > 1) meta.push(`📷 Com ${fotos.length} fotos`);
     if(meta.length){
       linhas.push('');
       linhas.push(meta.join(' · '));
@@ -1788,6 +1727,19 @@ document.getElementById('zapItemCopiar').addEventListener('click', async () => {
    AÇÕES LISTA
 ============================================================ */
 document.getElementById('lista').addEventListener('click', async e => {
+  // Clique em uma foto → abre galeria
+  const fotoEl = e.target.closest('[data-foto-card]');
+  if(fotoEl){
+    const id = fotoEl.dataset.fotoCard;
+    const idx = parseInt(fotoEl.dataset.fotoIdx || '0', 10);
+    const item = items.find(x => x.id === id);
+    if(item){
+      const fotos = getFotosItem(item);
+      if(fotos.length) abrirLightbox(fotos, idx);
+    }
+    return;
+  }
+
   const btn = e.target.closest('[data-acao]');
   if(!btn) return;
   const id = btn.dataset.id;
@@ -1951,7 +1903,7 @@ function renderPreviewTarefa(el, item){
 }
 function processarTextoVoz(txt){
   itemVoz = parseFala(txt);
-  itemVoz.porVoz = !itemVoz.isExtintor; itemVoz.porFoto = !!itemVoz.isExtintor;
+  itemVoz.porVoz = !itemVoz.isExtintor;
   vozTxt.textContent = `“${txt}”`; vozTxt.classList.remove('vazio');
   setStatus(itemVoz.isExtintor ? '🧯 Extintor detectado! Confira.' : 'Entendi! Confira e salve.', '');
   renderPreviewTarefa(vozPreview, itemVoz);
@@ -1968,7 +1920,8 @@ async function salvarVoz(){
       lembrete: itemVoz.lembrete, horaLembrete: itemVoz.horaLembrete,
       concluido: false, criadoEm: Date.now(),
       isExtintor: !!itemVoz.isExtintor, tipoItem: itemVoz.tipoItem || 'tarefa',
-      porVoz: !!itemVoz.porVoz, porFoto: !!itemVoz.porFoto
+      porVoz: true,
+      fotosDataUrl: []
     };
     if(itemVoz.isExtintor) Object.assign(base, { numero: itemVoz.numero, tipo: itemVoz.tipo, capacidade: itemVoz.capacidade, local: itemVoz.local, fabricacao: itemVoz.fabricacao, validade: itemVoz.validade, recarga: itemVoz.recarga });
     await DB.criar(base);
@@ -1986,330 +1939,12 @@ vozInputBtn.addEventListener('click', ()=>{ const txt = vozInput.value.trim(); i
 vozInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); vozInputBtn.click(); } });
 
 /* ============================================================
-   FOTO / OCR (modal de extintor)
-============================================================ */
-const overlayFoto = document.getElementById('overlayFoto');
-const fotoEtapa1 = document.getElementById('fotoEtapa1');
-const fotoEtapa2 = document.getElementById('fotoEtapa2');
-const fotoEtapa3 = document.getElementById('fotoEtapa3');
-const fotoGuia = document.getElementById('fotoGuia');
-const fotoPreview = document.getElementById('fotoPreview');
-const fotoImg = document.getElementById('fotoImg');
-const fotoProg = document.getElementById('fotoProg');
-const fotoProgBar = document.getElementById('fotoProgBar');
-const fotoStatus = document.getElementById('fotoStatus');
-const fotoStatusTxt = document.getElementById('fotoStatusTxt');
-const fotoErro = document.getElementById('fotoErro');
-const fotoTexto = document.getElementById('fotoTexto');
-const inputCamera = document.getElementById('inputCamera');
-const inputGaleria = document.getElementById('inputGaleria');
-const btnAbrirGaleria = document.getElementById('btnAbrirGaleria');
-const revCampos = document.getElementById('revCampos');
-const revCabec = document.getElementById('revCabec');
-const revIcone = document.getElementById('revIcone');
-const revTitulo = document.getElementById('revTitulo');
-const revSub = document.getElementById('revSub');
-const revStatus = document.getElementById('revStatus');
-
-function carregarScript(src){
-  return new Promise((res, rej)=>{
-    const s = document.createElement('script');
-    s.src = src; s.async = true;
-    s.onload = ()=>res();
-    s.onerror = ()=>rej(new Error('Falha ao carregar '+src));
-    document.head.appendChild(s);
-  });
-}
-async function garantirTesseract(){
-  if(tesseractCarregado && window.Tesseract) return;
-  if(!window.Tesseract){ await carregarScript('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js'); }
-  tesseractCarregado = true;
-}
-function setFotoStatus(tipo, texto){ fotoStatus.hidden = false; fotoStatus.className = 'foto-status' + (tipo ? ' '+tipo : ''); fotoStatusTxt.textContent = texto; }
-function setFotoErro(msg){ if(!msg){ fotoErro.classList.remove('on'); fotoErro.innerHTML=''; return; } fotoErro.innerHTML = msg; fotoErro.classList.add('on'); }
-function resetFoto(){
-  if(imgUrlAtual){ URL.revokeObjectURL(imgUrlAtual); imgUrlAtual = null; }
-  itemFoto = null;
-  fotoImg.removeAttribute('src');
-  fotoEtapa1.hidden = false; fotoEtapa2.hidden = true; fotoEtapa3.hidden = true;
-  fotoPreview.hidden = true;
-  fotoProg.hidden = true; fotoProgBar.style.width = '0%';
-  fotoStatus.hidden = true; fotoStatus.className = 'foto-status';
-  fotoTexto.value = '';
-  setFotoErro(null);
-  inputCamera.value = '';
-  inputGaleria.value = '';
-  processandoFoto = false;
-}
-function atualizarModoFoto(){ fotoGuia.hidden = modoFoto !== 'extintor'; }
-function abrirFoto(){ resetFoto(); overlayFoto.classList.add('on'); document.body.style.overflow = 'hidden'; atualizarModoFoto(); }
-function fecharFoto(){ resetFoto(); overlayFoto.classList.remove('on'); document.body.style.overflow = ''; }
-async function preprocessarImagem(file){
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      try{
-        const MIN = 1000;
-        const escala = img.width < MIN ? Math.min(2, MIN / img.width) : 1;
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.round(img.width * escala);
-        canvas.height = Math.round(img.height * escala);
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const id = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = id.data;
-        for(let i = 0; i < data.length; i += 4){
-          const gray = 0.299*data[i] + 0.587*data[i+1] + 0.114*data[i+2];
-          const c = (gray - 128) * 1.35 + 128;
-          const v = c < 0 ? 0 : c > 255 ? 255 : c;
-          data[i] = data[i+1] = data[i+2] = v;
-        }
-        ctx.putImageData(id, 0, 0);
-        canvas.toBlob(b => resolve(b || file), 'image/jpeg', 0.9);
-      }catch(e){ resolve(file); }
-    };
-    img.onerror = () => resolve(file);
-    img.src = URL.createObjectURL(file);
-  });
-}
-async function processarFoto(file){
-  if(!file || processandoFoto) return;
-  processandoFoto = true;
-  setFotoErro(null);
-  fotoEtapa1.hidden = true; fotoEtapa2.hidden = false; fotoEtapa3.hidden = true;
-  if(imgUrlAtual) URL.revokeObjectURL(imgUrlAtual);
-  imgUrlAtual = URL.createObjectURL(file);
-  fotoImg.src = imgUrlAtual;
-  fotoPreview.hidden = false;
-  fotoProg.hidden = false; fotoProgBar.style.width = '5%';
-  setFotoStatus('', 'Carregando IA de leitura…');
-  try { await garantirTesseract(); }
-  catch(e){
-    setFotoStatus('erro', 'Falha ao carregar a IA');
-    setFotoErro('<strong>📡 Sem conexão com a IA</strong>Não foi possível carregar o leitor. Verifique a internet.');
-    processandoFoto = false; return;
-  }
-  fotoProgBar.style.width = '15%';
-  setFotoStatus('', 'Melhorando imagem…');
-  let arquivo = file;
-  try { arquivo = await preprocessarImagem(file); } catch(e){}
-  fotoProgBar.style.width = '20%';
-  setFotoStatus('', 'Lendo o texto da etiqueta…');
-  try{
-    const resultado = await window.Tesseract.recognize(arquivo, 'por', {
-      logger: (m)=>{
-        if(m.status === 'loading tesseract core') setFotoStatus('', 'Preparando IA…');
-        else if(m.status === 'initializing tesseract') setFotoStatus('', 'Inicializando IA…');
-        else if(m.status === 'loading language traineddata') setFotoStatus('', 'Carregando idioma português…');
-        else if(m.status === 'initializing api') setFotoStatus('', 'Iniciando análise…');
-        else if(m.status === 'recognizing text'){
-          const p = Math.round((m.progress || 0) * 100);
-          fotoProgBar.style.width = (20 + p * 0.8) + '%';
-          setFotoStatus('', `Lendo etiqueta… ${p}%`);
-        }
-      }
-    });
-    fotoProgBar.style.width = '100%';
-    const texto = (resultado?.data?.text || '').trim();
-    if(!texto || texto.length < 3){
-      setFotoStatus('erro', 'Não encontrei texto na imagem');
-      setFotoErro('<strong>📷 Sem texto legível</strong>Aproxime mais da etiqueta, melhore a luz e evite reflexos. Depois tente de novo.');
-      fotoEtapa1.hidden = false; fotoEtapa2.hidden = true;
-      processandoFoto = false; return;
-    }
-    setFotoStatus('ok', '✓ Etiqueta lida com sucesso!');
-    fotoTexto.value = texto;
-    setTimeout(() => { fotoEtapa2.hidden = true; mostrarRevisao(texto); }, 500);
-  }catch(err){
-    console.error('OCR falhou:', err);
-    setFotoStatus('erro', 'Erro ao analisar');
-    setFotoErro('<strong>⚠️ Não foi possível analisar</strong>'+(err.message||'')+'<br>Tente tirar outra foto.');
-    fotoEtapa1.hidden = false; fotoEtapa2.hidden = true;
-  }finally{ processandoFoto = false; }
-}
-function mostrarRevisao(textoBruto){
-  const texto = String(textoBruto||'').trim();
-  if(!texto){ return; }
-  itemFoto = parseFala(texto, modoFoto === 'extintor' ? 'extintor' : undefined);
-  itemFoto.porFoto = true; itemFoto.porVoz = false;
-  fotoTexto.value = texto;
-  atualizarRevisao();
-  fotoEtapa3.hidden = false;
-}
-function atualizarRevisao(){
-  if(!itemFoto) return;
-  const isExt = itemFoto.isExtintor;
-  if(isExt){
-    const s = statusExtintor(itemFoto.validade);
-    revCabec.className = 'rev-cabec status-' + s.cor;
-    revIcone.textContent = '🧯';
-    revTitulo.textContent = itemFoto.numero ? `Extintor Nº ${itemFoto.numero}` : 'Extintor';
-    revSub.textContent = [itemFoto.tipo, itemFoto.capacidade, itemFoto.local].filter(Boolean).join(' · ') || 'Preencha os dados abaixo';
-    revStatus.textContent = s.label;
-  } else {
-    revCabec.className = 'rev-cabec status-cinza';
-    revIcone.textContent = '📌';
-    revTitulo.textContent = 'Tarefa detectada';
-    revSub.textContent = 'Confira os dados abaixo';
-    revStatus.textContent = 'TAREFA';
-  }
-  if(isExt){
-    const chipsLocal = LOCAIS_SUGERIDOS.map(l => `<button type="button" data-local="${l}">${l}</button>`).join('');
-    revCampos.innerHTML = `
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">🔢</span>Nº do extintor</div><input type="text" data-campo="numero" value="${escapar(itemFoto.numero||'')}" placeholder="Ex: 12"></div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">⚖️</span>Capacidade</div><input type="text" data-campo="capacidade" value="${escapar(itemFoto.capacidade||'')}" placeholder="Ex: 4 kg"></div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">🧪</span>Tipo</div><input type="text" data-campo="tipo" value="${escapar(itemFoto.tipo||'')}" placeholder="Ex: PQS (ABC)"></div>
-      <div class="rev-campo ${!itemFoto.local ? 'vazio destaque' : 'destaque'}">
-        <div class="rc-lbl"><span class="em">📍</span>Local / Setor / Andar ${!itemFoto.local ? '— preencher' : ''}</div>
-        <input type="text" data-campo="local" value="${escapar(itemFoto.local||'')}" placeholder="Ex: Corredor 2º andar / Recepção">
-        <div class="rev-chips-local" id="revChipsLocal"><span class="rc-lbl-mini">Toque rápido:</span>${chipsLocal}</div>
-      </div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">🔧</span>Fabricação</div><input type="text" data-campo="fabricacao" value="${itemFoto.fabricacao ? dataBR(itemFoto.fabricacao) : ''}" placeholder="dd/mm/aaaa"></div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">♻️</span>Última recarga</div><input type="text" data-campo="recarga" value="${itemFoto.recarga ? dataBR(itemFoto.recarga) : ''}" placeholder="dd/mm/aaaa"></div>
-      <div class="rev-campo ${statusExtintor(itemFoto.validade).cor === 'vermelho' ? 'destaque2' : 'destaque'}">
-        <div class="rc-lbl"><span class="em">📅</span>Validade / Vencimento</div>
-        <input type="text" data-campo="validade" value="${itemFoto.validade ? dataBR(itemFoto.validade) : ''}" placeholder="dd/mm/aaaa">
-      </div>
-    `;
-    const chipsLocalEl = document.getElementById('revChipsLocal');
-    if(chipsLocalEl){
-      chipsLocalEl.querySelectorAll('button[data-local]').forEach(b => {
-        if(itemFoto.local && itemFoto.local.toLowerCase().includes(b.dataset.local.toLowerCase())){ b.classList.add('on'); }
-        b.addEventListener('click', () => {
-          const valor = b.dataset.local;
-          const inp = revCampos.querySelector('input[data-campo="local"]');
-          if(!inp) return;
-          const atual = inp.value.trim();
-          if(atual){
-            if(!atual.toLowerCase().includes(valor.toLowerCase())){ inp.value = atual + ' · ' + valor; }
-            else { const partes = atual.split(/\s*·\s*/).filter(p => p.toLowerCase() !== valor.toLowerCase()); inp.value = partes.join(' · '); }
-          } else { inp.value = valor; }
-          inp.dispatchEvent(new Event('input'));
-          const novos = inp.value.split(/\s*·\s*/).map(p=>p.toLowerCase());
-          chipsLocalEl.querySelectorAll('button[data-local]').forEach(x => { x.classList.toggle('on', novos.includes(x.dataset.local.toLowerCase())); });
-        });
-      });
-    }
-  } else {
-    revCampos.innerHTML = `
-      <div class="rev-campo" style="grid-column:1/-1"><div class="rc-lbl"><span class="em">📝</span>Descrição</div><input type="text" data-campo="descricao" value="${escapar(itemFoto.descricao||'')}" placeholder="Descrição da tarefa"></div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">📅</span>Data</div><input type="text" data-campo="data" value="${itemFoto.data ? dataBR(itemFoto.data) : ''}" placeholder="dd/mm/aaaa"></div>
-      <div class="rev-campo"><div class="rc-lbl"><span class="em">🕐</span>Hora</div><input type="text" data-campo="hora" value="${itemFoto.hora||''}" placeholder="hh:mm"></div>
-    `;
-  }
-  revCampos.querySelectorAll('input[data-campo]').forEach(inp => {
-    inp.addEventListener('input', () => {
-      const campo = inp.dataset.campo;
-      const valor = inp.value.trim();
-      if(campo === 'numero' || campo === 'capacidade' || campo === 'tipo' || campo === 'local'){
-        itemFoto[campo] = valor;
-        if(campo === 'local'){ const box = inp.closest('.rev-campo'); if(valor){ box.classList.remove('vazio'); } else { box.classList.add('vazio'); } }
-        if(campo === 'local' || campo === 'numero' || campo === 'tipo' || campo === 'capacidade'){ reconstruirDescricaoExt(); }
-      } else if(campo === 'fabricacao' || campo === 'recarga' || campo === 'validade'){
-        itemFoto[campo] = valor ? (brParaISO(valor) || '') : '';
-        reconstruirDescricaoExt();
-      } else if(campo === 'data'){
-        itemFoto.data = valor ? (brParaISO(valor) || '') : '';
-      } else if(campo === 'descricao' || campo === 'hora'){
-        itemFoto[campo] = valor;
-      }
-      atualizarCabec();
-      if(campo === 'validade'){
-        const s = statusExtintor(itemFoto.validade);
-        const el = inp.closest('.rev-campo');
-        el.classList.remove('destaque','destaque2');
-        el.classList.add(s.cor === 'vermelho' ? 'destaque2' : 'destaque');
-        itemFoto.prioridade = s.cor === 'vermelho' ? 'alta' : s.cor === 'amarelo' ? 'media' : 'baixa';
-        itemFoto.data = itemFoto.validade || hojeISO();
-      }
-    });
-    if(['fabricacao','recarga','validade','data'].includes(inp.dataset.campo)){
-      inp.addEventListener('blur', ()=>{
-        const limpo = inp.value.replace(/\D/g,'');
-        if(limpo.length === 8){ inp.value = limpo.slice(0,2)+'/'+limpo.slice(2,4)+'/'+limpo.slice(4); inp.dispatchEvent(new Event('input')); }
-        else if(limpo.length === 6){ inp.value = limpo.slice(0,2)+'/'+limpo.slice(2,4)+'/'+limpo.slice(4); inp.dispatchEvent(new Event('input')); }
-      });
-    }
-  });
-}
-function reconstruirDescricaoExt(){
-  if(!itemFoto || !itemFoto.isExtintor) return;
-  const partes = [];
-  if(itemFoto.numero) partes.push('Nº ' + itemFoto.numero);
-  if(itemFoto.tipo) partes.push(itemFoto.tipo);
-  if(itemFoto.capacidade) partes.push(itemFoto.capacidade);
-  const L = [];
-  L.push('🧯 Extintor' + (partes.length ? ' ' + partes.join(' · ') : ''));
-  if(itemFoto.local) L.push('📍 Local: ' + itemFoto.local);
-  if(itemFoto.fabricacao) L.push('🔧 Fabricação: ' + dataBR(itemFoto.fabricacao));
-  if(itemFoto.recarga) L.push('♻️ Recarga: ' + dataBR(itemFoto.recarga));
-  if(itemFoto.validade) L.push('📅 Validade: ' + dataBR(itemFoto.validade));
-  itemFoto.descricao = L.join('\n');
-}
-function atualizarCabec(){
-  if(!itemFoto) return;
-  if(itemFoto.isExtintor){
-    const s = statusExtintor(itemFoto.validade);
-    revCabec.className = 'rev-cabec status-' + s.cor;
-    revTitulo.textContent = itemFoto.numero ? `Extintor Nº ${itemFoto.numero}` : 'Extintor';
-    revSub.textContent = [itemFoto.tipo, itemFoto.capacidade, itemFoto.local].filter(Boolean).join(' · ') || 'Preencha os dados abaixo';
-    revStatus.textContent = s.label;
-  }
-}
-async function salvarFoto(){
-  if(!itemFoto){ toast('Nada para salvar'); return; }
-  const avisos = [];
-  if(itemFoto.isExtintor){
-    if(!itemFoto.validade) avisos.push('validade não preenchida');
-    if(!itemFoto.local) avisos.push('local não identificado');
-  }
-  if(avisos.length > 0){
-    abrirConfirmacao({ titulo: 'Faltam informações', texto: 'Atenção: ' + avisos.join(' e ') + '.', destaque: 'Você pode salvar mesmo assim e completar depois em Editar.', icone: '⚠️', botao: 'Salvar mesmo assim', perigo: false, onConfirmar: async () => { await executarSalvarFoto(); } });
-    return;
-  }
-  await executarSalvarFoto();
-}
-async function executarSalvarFoto(){
-  try{
-    const base = {
-      id: uid(), titulo: '', descricao: itemFoto.descricao,
-      categoria: itemFoto.categoria, prioridade: itemFoto.prioridade,
-      data: itemFoto.data, hora: itemFoto.hora,
-      lembrete: itemFoto.lembrete, horaLembrete: itemFoto.horaLembrete,
-      concluido: false, criadoEm: Date.now(),
-      isExtintor: !!itemFoto.isExtintor, tipoItem: itemFoto.tipoItem || 'tarefa', porFoto: true
-    };
-    if(itemFoto.isExtintor) Object.assign(base, { numero: itemFoto.numero, tipo: itemFoto.tipo, capacidade: itemFoto.capacidade, local: itemFoto.local, fabricacao: itemFoto.fabricacao, validade: itemFoto.validade, recarga: itemFoto.recarga });
-    await DB.criar(base);
-    await recarregarDoBanco(); fecharFoto();
-    toast(itemFoto.isExtintor ? '🧯 Extintor registrado!' : '📷 Tarefa adicionada!');
-  }catch(e){ console.error(e); toast('⚠️ Erro ao salvar'); }
-}
-document.getElementById('btnAbrirCamera').addEventListener('click', () => { inputCamera.click(); });
-btnAbrirGaleria.addEventListener('click', () => { inputGaleria.click(); });
-inputCamera.addEventListener('change', e => { const f = e.target.files?.[0]; if(f) processarFoto(f); });
-inputGaleria.addEventListener('change', e => { const f = e.target.files?.[0]; if(f) processarFoto(f); });
-document.getElementById('fotoFechar').addEventListener('click', fecharFoto);
-overlayFoto.addEventListener('click', e=>{ if(e.target===overlayFoto) fecharFoto(); });
-document.getElementById('fotoNova').addEventListener('click', ()=>{ resetFoto(); });
-document.getElementById('fotoReanalisar').addEventListener('click', ()=>{ const t = fotoTexto.value.trim(); if(!t){ toast('Sem texto para analisar'); return; } mostrarRevisao(t); toast('🔍 Reinterpretado!'); });
-document.getElementById('fotoSalvar').addEventListener('click', salvarFoto);
-document.querySelectorAll('.foto-modo button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.foto-modo button').forEach(x => x.classList.remove('on'));
-    b.classList.add('on'); modoFoto = b.dataset.modo; atualizarModoFoto();
-    if(itemFoto && fotoTexto.value.trim()) mostrarRevisao(fotoTexto.value);
-  });
-});
-
-/* ============================================================
    RELATÓRIO
 ============================================================ */
 const overlayRel = document.getElementById('overlayRel');
 const relPreview = document.getElementById('relPreview');
 const relContador = document.getElementById('relContador');
 const relAviso = document.getElementById('relAviso');
-const relBox = document.getElementById('relBox');
 
 function gerarRelatorio(escopo, formato, incluirConcluidas){
   const agora = new Date();
@@ -2504,7 +2139,8 @@ async function atualizarInfoBanco(){
   const conc = items.filter(i => i.concluido).length;
   const lem  = items.filter(i => i.lembrete).length;
   const voz  = items.filter(i => i.porVoz).length;
-  const foto = items.filter(i => i.porFoto).length;
+  const foto = items.filter(i => getFotosItem(i).length > 0).length;
+  const totalFotos = items.reduce((acc, i) => acc + getFotosItem(i).length, 0);
   const exts = items.filter(i => i.isExtintor).length;
   let tamanho = '—';
   try{ const est = await navigator.storage?.estimate?.(); if(est?.usage != null) tamanho = (est.usage/1024).toFixed(1) + ' KB'; }catch(e){}
@@ -2515,14 +2151,15 @@ async function atualizarInfoBanco(){
       <div style="padding:14px;border-radius:14px;background:rgba(255,181,71,.10);border:1px solid rgba(255,181,71,.22)"><div style="font-size:11.5px;color:#ffc46e;font-weight:700">PENDENTES</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#ffc46e">${pend}</div></div>
       <div style="padding:14px;border-radius:14px;background:rgba(46,230,168,.10);border:1px solid rgba(46,230,168,.22)"><div style="font-size:11.5px;color:#5ff0bd;font-weight:700">CONCLUÍDAS</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#5ff0bd">${conc}</div></div>
       <div style="padding:14px;border-radius:14px;background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.22)"><div style="font-size:11.5px;color:#b9a6ff;font-weight:700">LEMBRETES</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#b9a6ff">${lem}</div></div>
-      <div style="padding:14px;border-radius:14px;background:rgba(61,220,255,.10);border:1px solid rgba(61,220,255,.22)"><div style="font-size:11.5px;color:#7ee6ff;font-weight:700">POR FOTO</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#7ee6ff">${foto}</div></div>
+      <div style="padding:14px;border-radius:14px;background:rgba(61,220,255,.10);border:1px solid rgba(61,220,255,.22)"><div style="font-size:11.5px;color:#7ee6ff;font-weight:700">FOTOS</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#7ee6ff">${totalFotos}</div></div>
     </div></div>
     <div class="field"><label>Detalhes</label>
       <div style="font-size:13.5px;color:#a9b0c4;line-height:1.9;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)">
         <div><strong>Motor:</strong> IndexedDB</div>
         <div><strong>Banco:</strong> ${DB_NAME}</div>
         <div><strong>Por voz:</strong> ${voz}</div>
-        <div><strong>Por foto:</strong> ${foto}</div>
+        <div><strong>Tarefas com foto:</strong> ${foto}</div>
+        <div><strong>Total de fotos:</strong> ${totalFotos}</div>
         <div><strong>Contatos WhatsApp:</strong> ${contatos.length}</div>
         <div><strong>Armazenamento:</strong> ${tamanho}</div>
       </div>
@@ -2552,17 +2189,20 @@ dbArquivo.addEventListener('change', async (e)=>{
     if(Array.isArray(pacote)){ lista = pacote; }
     else if(pacote && Array.isArray(pacote.tarefas)){ lista = pacote.tarefas; contatosImport = Array.isArray(pacote.contatosWhatsapp) ? pacote.contatosWhatsapp : []; }
     else { throw new Error('Formato inválido'); }
-    const convertidos = lista.map(i=>({
-      id: i.id || uid(),
-      titulo: '',
-      descricao: String(i.descricao || i.titulo || ''),
-      categoria: CATS[i.categoria] ? i.categoria : 'outro', prioridade: PRIOS[i.prioridade] ? i.prioridade : 'media',
-      data: i.data || '', hora: i.hora || '', lembrete: !!i.lembrete, horaLembrete: i.horaLembrete || '',
-      porVoz: !!i.porVoz, porFoto: !!i.porFoto, concluido: !!i.concluido, criadoEm: i.criadoEm || Date.now(),
-      isExtintor: !!i.isExtintor, tipoItem: i.tipoItem || 'tarefa',
-      numero: i.numero || '', tipo: i.tipo || '', capacidade: i.capacidade || '', local: i.local || '',
-      fabricacao: i.fabricacao || '', validade: i.validade || '', recarga: i.recarga || ''
-    }));
+    const convertidos = lista.map(i=>{
+      const fotos = Array.isArray(i.fotosDataUrl) ? i.fotosDataUrl.filter(Boolean) : (i.fotoDataUrl ? [i.fotoDataUrl] : []);
+      return {
+        id: i.id || uid(),
+        titulo: '',
+        descricao: String(i.descricao || i.titulo || ''),
+        categoria: CATS[i.categoria] ? i.categoria : 'outro', prioridade: PRIOS[i.prioridade] ? i.prioridade : 'media',
+        data: i.data || '', hora: i.hora || '', lembrete: !!i.lembrete, horaLembrete: i.horaLembrete || '',
+        porVoz: !!i.porVoz, fotosDataUrl: fotos, concluido: !!i.concluido, criadoEm: i.criadoEm || Date.now(),
+        isExtintor: !!i.isExtintor, tipoItem: i.tipoItem || 'tarefa',
+        numero: i.numero || '', tipo: i.tipo || '', capacidade: i.capacidade || '', local: i.local || '',
+        fabricacao: i.fabricacao || '', validade: i.validade || '', recarga: i.recarga || ''
+      };
+    });
     await DB.criarVarios(convertidos);
     if(contatosImport.length > 0){
       contatosImport.forEach(c => { if(!contatos.some(x => x.nome.toLowerCase() === (c.nome||'').toLowerCase())){ contatos.push({ id: c.id || uid(), nome: String(c.nome||'Contato'), telefone: String(c.telefone||'').replace(/\D/g,'') }); } });
@@ -2596,12 +2236,16 @@ async function init(){
   document.getElementById('btnSalvar').addEventListener('click', salvarItem);
   overlay.addEventListener('click', e=>{ if(e.target===overlay) fecharModal(); });
   document.addEventListener('keydown', e=>{
+    if(lightbox.classList.contains('on')){
+      if(e.key === 'Escape'){ fecharLightbox(); return; }
+      if(e.key === 'ArrowLeft'){ fotoLightboxPrev(); return; }
+      if(e.key === 'ArrowRight'){ fotoLightboxNext(); return; }
+    }
     if(e.key === 'Escape'){
       if(overlayZapItem.classList.contains('on')) fecharZapItem();
       else if(overlayContato.classList.contains('on')) fecharModalContato();
       else if(overlayRel.classList.contains('on')) fecharRelatorio();
       else if(overlayConf.classList.contains('on')) fecharConfirmacao();
-      else if(overlayFoto.classList.contains('on')) fecharFoto();
       else if(overlayVoz.classList.contains('on')) fecharVoz();
       else if(overlayDb.classList.contains('on')) fecharDb();
       else if(overlay.classList.contains('on')) fecharModal();
